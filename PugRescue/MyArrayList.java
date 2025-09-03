@@ -79,15 +79,32 @@ public class MyArrayList<E> {
 		/* ---- YOUR CODE HERE ---- */
 	}
 
+	public E [] expandArray(E [] newArray) {
+		newArray = (E[])new Object[size() * 2];
+		for (int i = 0; i < size(); i++) {
+			newArray[i] = internalArray[i];
+		}
+		return newArray;
+	}
+	
 	/* Insert an object at index */
 	@SuppressWarnings("unchecked")
 	public void add(int index, E obj) {
+		if (size() >= internalArray.length) {
+			
+		}
+		}
 		/* ---- YOUR CODE HERE ---- */
 	}
 
 	/* Add an object to the end of the list; returns true */
 	@SuppressWarnings("unchecked")
 	public boolean add(E obj) {
+		if (internalArray[size() - 1] == null) {
+			internalArray = expandArray(internalArray);
+		}
+		internalArray[size()] = obj;
+		return true;
 		/* ---- YOUR CODE HERE ---- */
 	}
 
@@ -103,7 +120,7 @@ public class MyArrayList<E> {
 	 * Returns true if this list contained the specified element (or equivalently, 
 	 * if this list changed as a result of the call). */
 	public boolean remove(E obj) {
-		/* ---- YOUR CODE HERE ---- */
+
 	}
 
 
