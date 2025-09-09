@@ -76,11 +76,7 @@ public class MyArrayList<E> {
 	}
 
 	public E [] expandArray(E [] newArray) {
-		newArray = (E[])new Object[size() * 2];
-		for (int i = 0; i < size(); i++) {
-			newArray[i] = internalArray[i];
-		}
-		return newArray;
+		
 	}
 	
 	/* Insert an object at index */
