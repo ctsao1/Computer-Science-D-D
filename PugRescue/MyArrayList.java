@@ -32,23 +32,15 @@ public class MyArrayList<E> {
 	 * Change code
 	*/
 	public int size() {
-		int count = 0;
-		for (int i = 0; i < internalArray.length; i++) {
-			if (internalArray[i] != null) {
-				count++;
-			}
-		}
-		return count;
+		return objectCount;
 	}
 
 	/* Are there zero objects in the array list? */
 	public boolean isEmpty() {
-		for (int i = 0; i < internalArray.length; i++) {
-			if (internalArray[i] != null) {
-				return false;
-			}
+		if (objectCount == 0) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/* Get the index-th object in the list. */
