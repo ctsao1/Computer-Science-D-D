@@ -28,7 +28,9 @@ public class MyArrayList<E> {
 	}
 
 	// methods
-	/* Return the number of active slots in the array list */
+	/* Return the number of active slots in the array list 
+	 * Change code
+	*/
 	public int size() {
 		int count = 0;
 		for (int i = 0; i < internalArray.length; i++) {
@@ -68,7 +70,9 @@ public class MyArrayList<E> {
 	}
 
 	/* Returns true if this list contains an element equal to obj;
-	 otherwise returns false. */
+	 otherwise returns false. 
+	 BigO (n)
+	  */
 	public boolean contains(E obj) {
 		for (int i = 0; i < internalArray.length; i++) {
 			if (internalArray[i].equals(obj) == true) {
