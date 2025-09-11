@@ -75,8 +75,13 @@ public class MyArrayList<E> {
 		/* ---- YOUR CODE HERE ---- */
 	}
 
-	public E [] expandArray(E [] newArray) {
-		
+	public E [] expandArray(E [] oldArray) {
+		E [] newArray;
+		newArray = (E[]) new Object[oldArray.length * 2];
+		for (int i = 0; i < oldArray.length; i++) {
+			newArray[i] = oldArray[i];
+		}
+		return newArray;
 	}
 	
 	/* Insert an object at index */
@@ -87,7 +92,6 @@ public class MyArrayList<E> {
 		}
 		}
 		/* ---- YOUR CODE HERE ---- */
-	}
 
 	/* Add an object to the end of the list; returns true */
 	@SuppressWarnings("unchecked")
