@@ -87,19 +87,18 @@ public class MyArrayList<E> {
 	/* Insert an object at index */
 	@SuppressWarnings("unchecked")
 	public void add(int index, E obj) {
-		if (size() >= internalArray.length) {
-			
-		}
-		}
-		/* ---- YOUR CODE HERE ---- */
+
+
+	}
 
 	/* Add an object to the end of the list; returns true */
 	@SuppressWarnings("unchecked")
 	public boolean add(E obj) {
-		if (internalArray[size() - 1] == null) {
-			internalArray = expandArray(internalArray);
+		int emptySpot = size() + 1;
+		if (size() == internalArray.length - 1) {
+			expandArray(internalArray);
 		}
-		internalArray[size()] = obj;
+		internalArray[emptySpot] = obj;
 		return true;
 		/* ---- YOUR CODE HERE ---- */
 	}
