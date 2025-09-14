@@ -19,12 +19,19 @@ public class MyArrayList<E> {
 	@SuppressWarnings("unchecked")
 	public MyArrayList() {
 		this.internalArray = (E[])new Object[100];
+
 	}
 
 	/* Constructor with initial capacity */
 	@SuppressWarnings("unchecked")
 	public MyArrayList(int initialCapacity){
 		this.internalArray = (E[])new Object[initialCapacity];
+		for (int i = internalArray.length - 1; i > 0; i--) {
+			if (internalArray[i] != null) {
+				objectCount = i + 1;
+				i = 0;
+			}
+		}
 	}
 
 	// methods
@@ -45,7 +52,7 @@ public class MyArrayList<E> {
 
 	/* Get the index-th object in the list. */
 	public E get(int index) {
-		if (index < 0 || index >= size()) {
+		if (index < 0 || index > size()) {
 			throw new IndexOutOfBoundsException("Your index was not within the index of the array");
 		}
 		return internalArray[index];
@@ -53,8 +60,11 @@ public class MyArrayList<E> {
 
 	/* Replace the object at index with obj.  returns object that was replaced. */
 	public E set(int index, E obj) {
-		if (index < 0 || index >= size()) {
+		if (index < 0 || index > internalArray.length) {
 			throw new IndexOutOfBoundsException("Your index was not within the index of the array");
+		}
+		if (internalArray[index] == null) {
+			objectCount++;
 		}
 		E output = internalArray[index];
 		internalArray[index] = obj;
@@ -75,12 +85,12 @@ public class MyArrayList<E> {
 		/* ---- YOUR CODE HERE ---- */
 	}
 
-	public E [] expandArray(E [] oldArray) {
+	public void expandArray(E [] oldArray) {
 		E [] newArray = (E[]) new Object[oldArray.length * 2];
 		for (int i = 0; i < oldArray.length; i++) {
 			newArray[i] = oldArray[i];
 		}
-		return newArray;
+		internalArray = newArray;
 	}
 	
 	/* Insert an object at index */
@@ -103,11 +113,12 @@ public class MyArrayList<E> {
 	/* Add an object to the end of the list; returns true */
 	@SuppressWarnings("unchecked")
 	public boolean add(E obj) {
-		int emptySpot = size() + 1;
-		if (size() == internalArray.length - 1) {
+		int emptySpot = size();
+		if (size() == internalArray.length) {
 			expandArray(internalArray);
 		}
 		internalArray[emptySpot] = obj;
+		objectCount++;
 		return true;
 		/* ---- YOUR CODE HERE ---- */
 	}
@@ -118,6 +129,8 @@ public class MyArrayList<E> {
 		for (int i = index; i < size() - 1; i++) {
 			internalArray[i] = internalArray[i + 1];
 		}
+		internalArray[size()] = null;
+		objectCount--;
 		return removed;
 		/* ---- YOUR CODE HERE ---- */
 	}
@@ -147,7 +160,7 @@ public class MyArrayList<E> {
 	 * Elements are separated by a comma and a space. */
 	public String toString() {
 		String output = "[";
-		for (int i = 0; i <= size(); i++) {
+		for (int i = 0; i < size(); i++) {
 			output = output + internalArray[i].toString() + ", ";
 		}
 		output = output + "]";
