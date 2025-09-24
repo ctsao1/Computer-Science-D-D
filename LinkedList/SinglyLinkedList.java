@@ -1,5 +1,6 @@
 // Implements a singly-linked list.
 
+import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<E> {
 	private ListNode<E> head;
@@ -8,18 +9,17 @@ public class SinglyLinkedList<E> {
 
 	// Constructor: creates an empty list
 	public SinglyLinkedList() {
-		E [] internalArray = (E[]) new Object[0];
+		head.setValue(null);
+		tail = head;
+		nodeCount = 0;
 	}
 
 	// Constructor: creates a list that contains
 	// all elements from the array values, in the same order
 	public SinglyLinkedList(Object[] values) {
-		int j = 0;
-		head.setValue((E) values[0]);
-		tail.setValue((E) values[values.length - 1]);
-		E [] internalArray = (E[]) new Object[values.length];
-		for (ListNode i = new L; i.equals(tail) != false; i = i.getNext()) {
-			
+		for (int i = 0; i < values.length; i++) {
+			add((E) values[i]);
+			nodeCount++;
 		}
 	}
 	
@@ -47,25 +47,48 @@ public class SinglyLinkedList<E> {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(E obj) {
-
+		for (ListNode<E> i = head; i.getNext() != null ; i = i.getNext()) {
+			if (i.getValue().equals(obj) == true) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Returns the index of the first element in equal to obj;
 	// if not found, returns -1.
 	public int indexOf(E obj) {
-
+		boolean found = false;
+		int index = 0;
+		ListNode<E> i = head;
+		while (found == false) {
+			if (i.getValue().equals(obj) == true) {
+				found = true;
+				return index;
+			}
+			i = i.getNext();
+		}
+		return -1;
 	}
 
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-
+		ListNode<E> temp = tail;
+		tail = new ListNode<E>(obj, null);
+		temp.setNext(tail);
+		nodeCount++;
+		return false;
 	}
 
 	// Removes the first element that is equal to obj, if any.
 	// Returns true if successful; otherwise returns false.
 	public boolean remove(E obj) {
-		
+		if (nodeCount == 0) {
+			throw new NoSuchElementException();
+		}
+		head = head.getNext();
+		return true;
 	}
 
 	// Returns the i-th element.               
