@@ -47,40 +47,73 @@ public class DoublyLinkedList {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(Nucleotide obj) {
-
+		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
+			if (i.getValue().equals(obj)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Returns the index of the first element in equal to obj;
 	// if not found, returns -1.
 	public int indexOf(Nucleotide obj) {
-
+		int j = 0;
+		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i.getNext()) {
+			if (i.getValue().equals(obj)) {
+				return j++;
+			}
+			j++;
+		}
+		return -1;
 	}
 
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(Nucleotide obj) {
-		ListNode2<Nucleotide> temp = SENTINEL;
+		ListNode2<Nucleotide> temp = getTail();
+		getTail().setNext(temp);
+		temp.setPrevious(getTail());
 		SENTINEL.setPrevious(temp);
 		temp.setValue(obj);
-		temp.setNext(temp);
-		temp.setPrevious(temp);
+		nodeCount++;
 		return true;
 	}
 
 	// Removes the first element that is equal to obj, if any.
 	// Returns true if successful; otherwise returns false.
 	public boolean remove(Nucleotide obj) {
-
+		if (indexOf(obj) == -1) {
+			return false;
+		}
+		ListNode2<Nucleotide> temp = getHead();
+		for (int i = 0; i < indexOf(obj); i++) {
+			temp = temp.getNext();
+		}
+		temp.getPrevious().setNext(temp.getNext());
+		temp.getNext().setPrevious(temp.getPrevious());
+		nodeCount--;
+		return true;
 	}
 
 	// Returns the i-th element.               
 	public Nucleotide get(int i) {
-
+		ListNode2<Nucleotide> temp = getHead();
+		for (int j = 0; j < i; j++) {
+			temp = temp.getNext();
+		}
+		return temp.getValue();
 	}
 
 	// Replaces the i-th element with obj and returns the old value.
 	public Nucleotide set(int i, Nucleotide obj) {
-
+		Nucleotide output = get(i);
+		ListNode2<Nucleotide> temp = getHead();
+		for (int j = 0; j < i; j++) {
+			temp = temp.getNext();
+		}
+		temp.setValue(obj);
+		return output;
 	}
 
 	// Inserts obj to become the i-th element. Increments the size
