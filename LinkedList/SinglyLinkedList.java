@@ -87,13 +87,17 @@ public class SinglyLinkedList<E> {
 		if (nodeCount == 0) {
 			throw new NoSuchElementException();
 		}
-		head = head.getNext();
+		
 		return true;
 	}
 
 	// Returns the i-th element.               
 	public E get(int i) {
-
+		ListNode<E> output = head;
+		for (int j = 0; j < i; j++) {
+			head = head.getNext();
+		}
+		return output.getValue();
 	}
 
 	// Replaces the i-th element with obj and returns the old value.
