@@ -119,19 +119,40 @@ public class DoublyLinkedList {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Nucleotide obj) {
-
+		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
+		ListNode2<Nucleotide> head = getHead();
+		for (int j = 0; j < i; j++) {
+			head = head.getNext();
+		}
+		temp.setPrevious(head);
+		temp.setNext(head.getNext());
+		head.getNext().setPrevious(temp);
+		head.setNext(temp);
+		nodeCount++;
 	}
 
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public Nucleotide remove(int i) {
-
+		ListNode2<Nucleotide> head = getHead();
+		for (int j = 0; j < i; j++) {
+			head = head.getNext();
+		}
+		head.getPrevious().setNext(head.getNext());
+		head.getNext().setPrevious(head.getPrevious());
+		nodeCount--;
+		return head.getValue();
 	}
 
 	// Returns a string representation of this list exactly like that for MyArrayList.
 	public String toString() {
-
-
+		StringBuilder output = new StringBuilder(nodeCount);
+		output.append('[');
+		for (int i = 0; i < nodeCount; i++) {
+			output.append(get(i).toString() + ", ");
+		}
+		output.append(getTail().toString() + "]");
+		return output.toString();
 	}
 	
 	// Like question 7 on the SinglyLinkedList test:
@@ -152,14 +173,14 @@ public class DoublyLinkedList {
 	// You are to find and delete the first instance of seg in the list.
 	// If seg is not in the list, return false, otherwise return true.
 	public boolean deleteSegment(DoublyLinkedList seg) {
-		
+		return true;
 	}
 	
 	// Like question 10 on the SinglyLinkedList test:
 	// Delete the last three nodes in the list
 	// If there are not enough nodes, return false
 	public boolean deleteLastThree() {
-		
+		return false;
 	}
 
 	// Like question 11 on the SinglyLinkedList test:
