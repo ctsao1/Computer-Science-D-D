@@ -1,5 +1,6 @@
 // Implements a singly-linked list.
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class SinglyLinkedList<E> {
@@ -47,10 +48,13 @@ public class SinglyLinkedList<E> {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(E obj) {
-		for (ListNode<E> i = head; i.getNext() != null ; i = i.getNext()) {
+		for (ListNode<E> i = getHead(); i.getNext() != null ; i = i.getNext()) {
 			if (i.getValue().equals(obj) == true) {
 				return true;
 			}
+		}
+		if (getTail().getValue().equals(obj) == true) {
+			return true;
 		}
 		return false;
 	}
@@ -58,15 +62,12 @@ public class SinglyLinkedList<E> {
 	// Returns the index of the first element in equal to obj;
 	// if not found, returns -1.
 	public int indexOf(E obj) {
-		boolean found = false;
 		int index = 0;
-		ListNode<E> i = head;
-		while (found == false) {
-			if (i.getValue().equals(obj) == true) {
-				found = true;
+		for (ListNode<E> i = getHead(); i.getNext() != null; i = i.getNext()) {
+			if (i.equals(obj)) {
 				return index;
 			}
-			i = i.getNext();
+			index++;
 		}
 		return -1;
 	}
@@ -74,11 +75,11 @@ public class SinglyLinkedList<E> {
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-		ListNode<E> temp = tail;
-		tail = new ListNode<E>(obj, null);
-		temp.setNext(tail);
+		ListNode<E> temp = new ListNode<E>(obj);
+		getTail().setNext(temp);
+		tail = temp;
 		nodeCount++;
-		return false;
+		return true;
 	}
 
 	// Removes the first element that is equal to obj, if any.
@@ -87,7 +88,13 @@ public class SinglyLinkedList<E> {
 		if (nodeCount == 0) {
 			throw new NoSuchElementException();
 		}
-		
+		int index = indexOf(obj) - 1;
+		ListNode<E> temp = getHead();
+		for (int i = 0; i < index; i++) {
+			temp = temp.getNext();
+		}
+		temp.setNext(temp.getNext().getNext());
+		nodeCount--;
 		return true;
 	}
 
@@ -108,13 +115,13 @@ public class SinglyLinkedList<E> {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Object obj) {
-
+		nodeCount++;
 	}
 
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public E remove(int i) {
-		
+		nodeCount--;
 	}
 
 	// Returns a string representation of this list exactly like that for MyArrayList.
