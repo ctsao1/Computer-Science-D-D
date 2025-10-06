@@ -48,7 +48,7 @@ public class SinglyLinkedList<E> {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(E obj) {
-		for (ListNode<E> i = getHead(); i.getNext() != null ; i = i.getNext()) {
+		for (ListNode<E> i = getHead(); i != null ; i = i.getNext()) {
 			if (i.getValue().equals(obj) == true) {
 				return true;
 			}
@@ -63,7 +63,7 @@ public class SinglyLinkedList<E> {
 	// if not found, returns -1.
 	public int indexOf(E obj) {
 		int index = 0;
-		for (ListNode<E> i = getHead(); i.getNext() != null; i = i.getNext()) {
+		for (ListNode<E> i = getHead(); i != null; i = i.getNext()) {
 			if (i.getValue().equals(obj)) {
 				return index;
 			}
