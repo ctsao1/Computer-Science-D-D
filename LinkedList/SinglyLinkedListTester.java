@@ -11,15 +11,20 @@ public class SinglyLinkedListTester {
         System.out.println(list.toString());
         System.out.println(list2.toString());
 
+        String[] array = new String[5];
+        SinglyLinkedList list3 = new SinglyLinkedList<>(array);
+
         // System.out.println(list2.indexOf("A"));
         // list2.remove("A");
         // list2.remove(1);
 
         // list2.remove("G");
         // list2.remove(5);
-        list2.add(null);
+        // list2.add(null);
+        list2.add(5, null);
 
         System.out.println(list2.toString());
+        System.out.println(list3.toString());
 
     }
 }

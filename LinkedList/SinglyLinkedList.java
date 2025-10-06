@@ -16,6 +16,9 @@ public class SinglyLinkedList<E> {
 	// Constructor: creates a list that contains
 	// all elements from the array values, in the same order
 	public SinglyLinkedList(Object[] values) {
+		if (values == null) {
+			throw new NullPointerException();
+		}
 		for (int i = 0; i < values.length; i++) {
 			add((E) values[i]);
 		}
@@ -91,6 +94,9 @@ public class SinglyLinkedList<E> {
 			throw new NoSuchElementException();
 		}
 		int index = indexOf(obj);
+		if (indexOf(obj) == -1) {
+			return false;
+		}
 		ListNode<E> temp = getHead();
 		if (index == 0) {
 			head = temp.getNext();
@@ -106,7 +112,7 @@ public class SinglyLinkedList<E> {
 
 	// Returns the i-th element.               
 	public E get(int i) {
-		if (i < 0 || i > nodeCount - 1) {
+		if (i < 0 || i > size()) {
 			throw new IndexOutOfBoundsException();
 		}
 		ListNode<E> output = head;
@@ -118,6 +124,9 @@ public class SinglyLinkedList<E> {
 
 	// Replaces the i-th element with obj and returns the old value.
 	public E set(int i, Object obj) {
+		if (i < 0 || i > size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode<E> temp = head;
 		for (int j = 0; j < i; j++) {
 			temp = head.getNext();
@@ -130,10 +139,17 @@ public class SinglyLinkedList<E> {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Object obj) {
+		if (i < 0 || i > size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode<E> temp = new ListNode<E>((E) obj);
 		ListNode<E> node = head;
+		if (i == 0) {
+			head = new ListNode<E>((E) obj, head);
+			return;
+		}
 		for (int j = 0; j < i - 1; j++) {
-			node = head.getNext();
+			node = node.getNext();
 		}
 		temp.setNext(node.getNext());
 		node.setNext(temp);
@@ -143,6 +159,9 @@ public class SinglyLinkedList<E> {
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public E remove(int i) {
+		if (i < 0 || i >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode<E> temp = head;
 		if (i == 1) {
 			E output = head.getValue();
@@ -180,5 +199,4 @@ public class SinglyLinkedList<E> {
 		return output.toString();
 	}
 	
-
 }
