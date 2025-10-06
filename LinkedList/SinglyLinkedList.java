@@ -10,8 +10,6 @@ public class SinglyLinkedList<E> {
 
 	// Constructor: creates an empty list
 	public SinglyLinkedList() {
-		head.setValue(null);
-		tail = head;
 		nodeCount = 0;
 	}
 
@@ -20,7 +18,6 @@ public class SinglyLinkedList<E> {
 	public SinglyLinkedList(Object[] values) {
 		for (int i = 0; i < values.length; i++) {
 			add((E) values[i]);
-			nodeCount++;
 		}
 	}
 	
@@ -75,9 +72,14 @@ public class SinglyLinkedList<E> {
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-		ListNode<E> temp = new ListNode<E>(obj);
-		getTail().setNext(temp);
-		tail = temp;
+		if (nodeCount == 0) {
+			head = new ListNode<E>(obj);
+			tail = head;
+			nodeCount++;
+			return true;
+		}
+		tail.setNext(new ListNode<E>(obj));
+		tail = tail.getNext();
 		nodeCount++;
 		return true;
 	}
@@ -102,32 +104,60 @@ public class SinglyLinkedList<E> {
 	public E get(int i) {
 		ListNode<E> output = head;
 		for (int j = 0; j < i; j++) {
-			head = head.getNext();
+			output = output.getNext();
 		}
 		return output.getValue();
 	}
 
 	// Replaces the i-th element with obj and returns the old value.
 	public E set(int i, Object obj) {
-
+		ListNode<E> temp = head;
+		for (int j = 0; j < i; j++) {
+			temp = head.getNext();
+		}
+		E output = temp.getValue();
+		temp.setValue((E) obj);
+		return output;
 	}
 
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Object obj) {
+		ListNode<E> temp = new ListNode<E>((E) obj);
+		ListNode<E> node = head;
+		for (int j = 0; j < i - 1; j++) {
+			node = head.getNext();
+		}
+		temp.setNext(node.getNext());
+		node.setNext(temp);
 		nodeCount++;
 	}
 
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public E remove(int i) {
+		ListNode<E> temp = head;
+		for (int j = 0; j < i - 1; j++) {
+			temp = head.getNext();
+		}
+		E output = temp.getNext().getValue();
+		temp.setNext(temp.getNext());
 		nodeCount--;
+		return output;
 	}
 
 	// Returns a string representation of this list exactly like that for MyArrayList.
 	public String toString() {
-
-
+		if (nodeCount == 0) {
+			return "[]";
+		}
+		StringBuilder output = new StringBuilder(nodeCount);
+		output.append('[');
+		for (int i = 0; i < nodeCount; i++) {
+			output.append(get(i).toString() + ", ");
+		}
+		output.append(getTail().getValue().toString() + "]");
+		return output.toString();
 	}
 	
 
