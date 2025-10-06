@@ -61,7 +61,7 @@ public class SinglyLinkedList<E> {
 	public int indexOf(E obj) {
 		int index = 0;
 		for (ListNode<E> i = getHead(); i.getNext() != null; i = i.getNext()) {
-			if (i.equals(obj)) {
+			if (i.getValue().equals(obj)) {
 				return index;
 			}
 			index++;
@@ -90,9 +90,13 @@ public class SinglyLinkedList<E> {
 		if (nodeCount == 0) {
 			throw new NoSuchElementException();
 		}
-		int index = indexOf(obj) - 1;
+		int index = indexOf(obj);
 		ListNode<E> temp = getHead();
-		for (int i = 0; i < index; i++) {
+		if (index == 0) {
+			head = temp.getNext();
+			return true;
+		}
+		for (int i = 0; i < index - 1; i++) {
 			temp = temp.getNext();
 		}
 		temp.setNext(temp.getNext().getNext());
@@ -102,6 +106,9 @@ public class SinglyLinkedList<E> {
 
 	// Returns the i-th element.               
 	public E get(int i) {
+		if (i < 0 || i > nodeCount - 1) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode<E> output = head;
 		for (int j = 0; j < i; j++) {
 			output = output.getNext();
@@ -137,11 +144,16 @@ public class SinglyLinkedList<E> {
 	// Decrements the size of the list by one.
 	public E remove(int i) {
 		ListNode<E> temp = head;
+		if (i == 1) {
+			E output = head.getValue();
+			head = temp.getNext();
+			return output;
+		}
 		for (int j = 0; j < i - 1; j++) {
-			temp = head.getNext();
+			temp = temp.getNext();
 		}
 		E output = temp.getNext().getValue();
-		temp.setNext(temp.getNext());
+		temp.setNext(temp.getNext().getNext());
 		nodeCount--;
 		return output;
 	}
@@ -153,10 +165,18 @@ public class SinglyLinkedList<E> {
 		}
 		StringBuilder output = new StringBuilder(nodeCount);
 		output.append('[');
-		for (int i = 0; i < nodeCount; i++) {
+		for (int i = 0; i < nodeCount - 1; i++) {
+			if (get(i) == null) {
+				output.append("null, ");
+			} else {
 			output.append(get(i).toString() + ", ");
+			}
 		}
+		if (getTail().getValue() == null) {
+			output.append("null]");
+		} else {
 		output.append(getTail().getValue().toString() + "]");
+		}
 		return output.toString();
 	}
 	
