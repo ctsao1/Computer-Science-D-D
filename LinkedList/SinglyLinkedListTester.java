@@ -24,7 +24,18 @@ public class SinglyLinkedListTester {
         list2.add(5, null);
 
         System.out.println(list2.toString());
+        System.out.println(list2.getHead().getValue());
+        System.out.println(list2.getTail().getValue());
+        System.out.println(list3.getHead().getValue());
+        System.out.println(list3.getTail().getValue());
         System.out.println(list3.toString());
+
+        System.out.println(list.getHead());
+        System.out.println(list.getTail());
+        list.add("Joe");
+        System.out.println(list.getHead().getValue());
+        System.out.println(list.getTail().getValue());
+        
 
     }
 }
