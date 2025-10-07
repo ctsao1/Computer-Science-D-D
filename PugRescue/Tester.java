@@ -1,16 +1,16 @@
 public class Tester {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        MyArrayList array = new MyArrayList<>(10);
-        for (int i = 0; i < 10; i++) {
-            array.set(i, i);
-        }
-
-        array.add(10);
-        System.out.println(array.toString());
-        array.remove(4);
-        array.remove(9);
-
-        System.out.println(array.toString());
+        MyArrayList list = new MyArrayList<>();
+        list.add("list");
+        System.out.println(list.toString());
+        list.add("bozo");
+        System.out.println(list.toString());
+        list.add(1, "BOZO");
+        System.out.println(list.toString());
+        System.out.println(list.remove(0));
+        System.out.println(list.toString());
+        System.out.println(list.remove("BOZO"));
+        System.out.println(list.toString());
     }
 }
