@@ -49,12 +49,13 @@ public class SinglyLinkedList<E> {
 	// otherwise returns false.
 	public boolean contains(E obj) {
 		for (ListNode<E> i = getHead(); i != null ; i = i.getNext()) {
-			if (i.getValue().equals(obj) == true) {
+			if (i.getValue() == null) {
+				if (obj == null) {
+					return true;
+				}
+			} else if (i.getValue().equals(obj)) {
 				return true;
 			}
-		}
-		if (getTail().getValue().equals(obj) == true) {
-			return true;
 		}
 		return false;
 	}
@@ -64,6 +65,9 @@ public class SinglyLinkedList<E> {
 	public int indexOf(E obj) {
 		int index = 0;
 		for (ListNode<E> i = getHead(); i != null; i = i.getNext()) {
+			if (obj == null && i.getValue() == null) {
+				return index;
+			}
 			if (i.getValue().equals(obj)) {
 				return index;
 			}
@@ -75,7 +79,7 @@ public class SinglyLinkedList<E> {
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-		if (nodeCount == 0) {
+		if (isEmpty() == true) {
 			head = new ListNode<E>(obj);
 			tail = head;
 			nodeCount++;
@@ -178,6 +182,7 @@ public class SinglyLinkedList<E> {
 		if (i == 0) {
 			E output = head.getValue();
 			head = temp.getNext();
+			nodeCount--;
 			return output;
 		}
 		for (int j = 0; j < i - 1; j++) {
