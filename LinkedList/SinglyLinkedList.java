@@ -91,7 +91,7 @@ public class SinglyLinkedList<E> {
 	// Returns true if successful; otherwise returns false.
 	public boolean remove(E obj) {
 		if (nodeCount == 0) {
-			throw new NoSuchElementException();
+			return false;
 		}
 		int index = indexOf(obj);
 		if (indexOf(obj) == -1) {
@@ -105,6 +105,11 @@ public class SinglyLinkedList<E> {
 		for (int i = 0; i < index - 1; i++) {
 			temp = temp.getNext();
 		}
+		if (indexOf(obj) == size() - 1) {
+			tail = temp.getNext();
+			nodeCount--;
+			return true;
+		}
 		temp.setNext(temp.getNext().getNext());
 		nodeCount--;
 		return true;
@@ -112,7 +117,7 @@ public class SinglyLinkedList<E> {
 
 	// Returns the i-th element.               
 	public E get(int i) {
-		if (i < 0 || i > size()) {
+		if (i < 0 || i >= size()) {
 			throw new IndexOutOfBoundsException();
 		}
 		ListNode<E> output = head;
@@ -124,12 +129,12 @@ public class SinglyLinkedList<E> {
 
 	// Replaces the i-th element with obj and returns the old value.
 	public E set(int i, Object obj) {
-		if (i < 0 || i > size()) {
+		if (i < 0 || i >= size()) {
 			throw new IndexOutOfBoundsException();
 		}
 		ListNode<E> temp = head;
 		for (int j = 0; j < i; j++) {
-			temp = head.getNext();
+			temp = temp.getNext();
 		}
 		E output = temp.getValue();
 		temp.setValue((E) obj);
@@ -146,6 +151,13 @@ public class SinglyLinkedList<E> {
 		ListNode<E> node = head;
 		if (i == 0) {
 			head = new ListNode<E>((E) obj, head);
+			nodeCount++;
+			return;
+		}
+		if (i == size()) {
+			tail.setNext(temp);
+			tail = temp;
+			nodeCount++;
 			return;
 		}
 		for (int j = 0; j < i - 1; j++) {
@@ -163,7 +175,7 @@ public class SinglyLinkedList<E> {
 			throw new IndexOutOfBoundsException();
 		}
 		ListNode<E> temp = head;
-		if (i == 1) {
+		if (i == 0) {
 			E output = head.getValue();
 			head = temp.getNext();
 			return output;
