@@ -68,7 +68,7 @@ public class SinglyLinkedList<E> {
 			if (obj == null && i.getValue() == null) {
 				return index;
 			}
-			if (i.getValue().equals(obj)) {
+			if (obj != null && i.getValue().equals(obj)) {
 				return index;
 			}
 			index++;
@@ -104,18 +104,22 @@ public class SinglyLinkedList<E> {
 		ListNode<E> temp = getHead();
 		if (index == 0) {
 			head = temp.getNext();
+			nodeCount--;
 			return true;
 		}
 		for (int i = 0; i < index - 1; i++) {
 			temp = temp.getNext();
 		}
 		if (indexOf(obj) == size() - 1) {
-			tail = temp.getNext();
+			tail = temp;
 			nodeCount--;
 			return true;
 		}
 		temp.setNext(temp.getNext().getNext());
 		nodeCount--;
+		if (nodeCount == 0) {
+			tail = null;
+		}
 		return true;
 	}
 
@@ -155,6 +159,9 @@ public class SinglyLinkedList<E> {
 		ListNode<E> node = head;
 		if (i == 0) {
 			head = new ListNode<E>((E) obj, head);
+			if (tail == null) {
+				tail = head;
+			}
 			nodeCount++;
 			return;
 		}
@@ -188,9 +195,17 @@ public class SinglyLinkedList<E> {
 		for (int j = 0; j < i - 1; j++) {
 			temp = temp.getNext();
 		}
+		if (temp.getNext() == tail) {
+			E output = tail.getValue();
+			tail = null;
+			return output;
+		}
 		E output = temp.getNext().getValue();
 		temp.setNext(temp.getNext().getNext());
 		nodeCount--;
+		if (nodeCount == 0) {
+			tail = null;
+		}
 		return output;
 	}
 
