@@ -53,7 +53,7 @@ public class DoublyLinkedList {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(Nucleotide obj) {
-		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
+		for (ListNode2<Nucleotide> i = getHead(); i != SENTINEL; i = i.getNext()) {
 			if ((obj == null && i.getValue() == null) ||(obj != null && i.getValue() != null && i.getValue().equals(obj))) {
 				return true;
 			}
@@ -65,7 +65,7 @@ public class DoublyLinkedList {
 	// if not found, returns -1.
 	public int indexOf(Nucleotide obj) {
 		int index = 0;
-		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
+		for (ListNode2<Nucleotide> i = getHead(); i != SENTINEL; i = i.getNext()) {
 			if ((obj == null && i.getValue() == null) || (obj != null && i.getValue() != null && i.getValue().equals(obj))) {
 				return index;
 			}
@@ -195,7 +195,9 @@ public class DoublyLinkedList {
 	// Like question 7 on the SinglyLinkedList test:
 	// Add a "segment" (another list) onto the end of this list
 	public void addSegmentToEnd(DoublyLinkedList seg) {
-		
+		getTail().setNext(seg.getHead());
+		seg.getHead().setPrevious(getTail());
+		seg.getTail().setNext(SENTINEL);
 	}
 	
 	// Like question 8 on the SinglyLinkedList test:
@@ -203,27 +205,70 @@ public class DoublyLinkedList {
 	// (on the test these nodes were assumed to contain CCCCCCCCGGGGGGGG, but here
 	// you do not need to assume or check for that)
 	public void removeCCCCCCCCGGGGGGGG(ListNode2<Nucleotide> nodeBefore) {
-		
+		int index = indexOf(nodeBefore.getValue());
+		int amount = size() - index;
+		if (amount > 16) {
+			amount = 16;
+		}
+		for (int i = index; i <= amount; i++) {
+			remove(i);
+		}
 	}
 	
 	// Like question 9 on the SinglyLinkedList test:
 	// You are to find and delete the first instance of seg in the list.
 	// If seg is not in the list, return false, otherwise return true.
 	public boolean deleteSegment(DoublyLinkedList seg) {
-		return true;
+		int index = -1;
+		ListNode2<Nucleotide> node = getHead();
+		for (int i = 0; i < size() - seg.size(); i++) {
+			ListNode2<Nucleotide> segNode = seg.getHead();
+			for (int j = 0; j < seg.size(); j++) {
+				if (node.equals(segNode) == false) {
+					break;
+				}
+				segNode = segNode.getNext();
+				if (j == seg.size() - 1) {
+					index = i;
+				}
+			}
+			if (index != -1) {
+				break;
+			}
+			node = node.getNext();
+		}
+		for (int i = 0; i < seg.size(); i++) {
+			remove(index);
+		}
+		return false;
 	}
 	
 	// Like question 10 on the SinglyLinkedList test:
 	// Delete the last three nodes in the list
 	// If there are not enough nodes, return false
 	public boolean deleteLastThree() {
-		return false;
+		if (size() < 3) {
+			return false;
+		}
+		for (int i = 0; i < 3; i++) {
+			remove(size() - 1);
+		}
+		return true;
 	}
 
 	// Like question 11 on the SinglyLinkedList test:
 	// Replaces every node containing "A" with three nodes containing "T" "A" "C"
 	public void replaceEveryAWithTAC() {
-		
+		for (ListNode2<Nucleotide> i = getHead(); i != SENTINEL; i = i.getNext()) {
+			ListNode2<Nucleotide> T = new ListNode2<Nucleotide>(Nucleotide.T, i.getPrevious(), i);
+			ListNode2<Nucleotide> C = new ListNode2<Nucleotide>(Nucleotide.C, i, i.getNext());
+			if (i.getValue().equals(Nucleotide.A)) {
+				i.getPrevious().setNext(T);
+				i.setPrevious(T);
+				i.getNext().setPrevious(C);
+				i.setNext(C);
+			}
+		}
 	}
 
 }

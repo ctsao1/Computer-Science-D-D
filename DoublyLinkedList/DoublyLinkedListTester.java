@@ -46,6 +46,7 @@ public class DoublyLinkedListTester {
         System.out.println("Head: " + list2.getHead().getValue());
         System.out.println("Sentinel: " + list2.getSentinel().getValue());
         System.out.println("Nodecount: " + list2.size());
+        System.out.println(list2.getTail().getNext().getNext().getValue());
 
         // System.out.println(list.contains(Nucleotide.G));
         // System.out.println(list.contains(Nucleotide.A));
