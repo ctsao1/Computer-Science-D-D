@@ -29,13 +29,22 @@ public class DoublyLinkedListTester {
         System.out.println(list2.toString());
         System.out.println(list.toString());
 
-        list.add(T);
-        list.add(0, C);
+        list.remove(0);
 
         System.out.println(list.toString());
         System.out.println("Tail: " + list.getTail().getValue());
         System.out.println("Head: " + list.getHead().getValue());
         System.out.println("Sentinel: " + list.getSentinel().getValue());
+        System.out.println("Nodecount: " + list.size());
+        System.out.println();
+
+        list2.remove(0);
+
+        System.out.println(list2.toString());
+        System.out.println("Tail: " + list2.getTail().getValue());
+        System.out.println("Head: " + list2.getHead().getValue());
+        System.out.println("Sentinel: " + list2.getSentinel().getValue());
+        System.out.println("Nodecount: " + list2.size());
 
         // System.out.println(list.contains(Nucleotide.G));
         // System.out.println(list.contains(Nucleotide.A));

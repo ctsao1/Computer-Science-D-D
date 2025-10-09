@@ -55,7 +55,7 @@ public class DoublyLinkedList {
 	// otherwise returns false.
 	public boolean contains(Nucleotide obj) {
 		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
-			if ((obj == null && i.getValue() == null) || i.getValue().equals(obj)) {
+			if ((obj == null && i.getValue() == null) ||(obj != null && i.getValue() != null && i.getValue().equals(obj))) {
 				return true;
 			}
 		}
@@ -67,7 +67,7 @@ public class DoublyLinkedList {
 	public int indexOf(Nucleotide obj) {
 		int index = 0;
 		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
-			if ((obj == null && i.getValue() == null) || i.getValue().equals(obj)) {
+			if ((obj == null && i.getValue() == null) || (obj != null && i.getValue() != null && i.getValue().equals(obj))) {
 				return index;
 			}
 			index++;
@@ -79,10 +79,17 @@ public class DoublyLinkedList {
 	// otherwise returns false.
 	public boolean add(Nucleotide obj) {
 		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
-		getTail().setNext(temp);
-		temp.setPrevious(getTail());
-		SENTINEL.setPrevious(temp);
-		temp.setNext(SENTINEL);
+		if (isEmpty() == true) {
+			SENTINEL.setNext(temp);
+			SENTINEL.setPrevious(temp);
+			temp.setPrevious(SENTINEL);
+			temp.setNext(SENTINEL);
+		} else {
+			getTail().setNext(temp);
+			temp.setPrevious(getTail());
+			SENTINEL.setPrevious(temp);
+			temp.setNext(SENTINEL);
+		}
 		nodeCount++;
 		return true;
 	}
@@ -90,16 +97,21 @@ public class DoublyLinkedList {
 	// Removes the first element that is equal to obj, if any.
 	// Returns true if successful; otherwise returns false.
 	public boolean remove(Nucleotide obj) {
-		if (indexOf(obj) == -1) {
+		int index = indexOf(obj);
+		if (index == -1) {
 			return false;
 		}
 		ListNode2<Nucleotide> temp = getHead();
-		for (int i = 0; i < indexOf(obj); i++) {
+		for (int i = 0; i < index; i++) {
 			temp = temp.getNext();
 		}
 		temp.getPrevious().setNext(temp.getNext());
 		temp.getNext().setPrevious(temp.getPrevious());
 		nodeCount--;
+		if (nodeCount == 0) {
+			SENTINEL.setNext(SENTINEL);
+			SENTINEL.setPrevious(SENTINEL);
+		}
 		return true;
 	}
 
@@ -135,21 +147,13 @@ public class DoublyLinkedList {
 		if (i < 0 || i > size()) {
 			throw new IndexOutOfBoundsException();
 		}
-		ListNode2<Nucleotide> node = getHead();
-		if (i == 0) {
-			ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj, SENTINEL, node);
-			return;
-		}
-		if (i == 0) {
-			ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj, getTail(), SENTINEL);
-			return;
-		}
+		ListNode2<Nucleotide> node = SENTINEL;
 		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
-		for (int j = 0; j < i - 1; j++) {
+		for (int j = 0; j < i; j++) {
 			node = node.getNext();
 		}
-		temp.setPrevious(node);
 		temp.setNext(node.getNext());
+		temp.setPrevious(node);
 		node.getNext().setPrevious(temp);
 		node.setNext(temp);
 		nodeCount++;
@@ -171,6 +175,10 @@ public class DoublyLinkedList {
 		temp.getPrevious().setNext(temp.getNext());
 		temp.getNext().setPrevious(temp.getPrevious());
 		nodeCount--;
+		if (nodeCount == 0) {
+			SENTINEL.setNext(SENTINEL);
+			SENTINEL.setPrevious(SENTINEL);
+		}
 		return temp.getValue();
 	}
 
