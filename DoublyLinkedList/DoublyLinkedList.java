@@ -15,7 +15,14 @@ public class DoublyLinkedList {
 	// Constructor: creates a list that contains
 	// all elements from the array values, in the same order
 	public DoublyLinkedList(Nucleotide[] values) {
-
+		if (values == null) {
+			throw new IllegalArgumentException();
+		}
+		SENTINEL.setNext(SENTINEL);
+		SENTINEL.setPrevious(SENTINEL);
+		for (int i = 0; i < values.length; i++) {
+			add(values[i]);
+		}
 	}
 	
 	public ListNode2<Nucleotide> getSentinel() {
@@ -48,7 +55,7 @@ public class DoublyLinkedList {
 	// otherwise returns false.
 	public boolean contains(Nucleotide obj) {
 		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
-			if (i.getValue().equals(obj)) {
+			if ((obj == null && i.getValue() == null) || i.getValue().equals(obj)) {
 				return true;
 			}
 		}
@@ -58,12 +65,12 @@ public class DoublyLinkedList {
 	// Returns the index of the first element in equal to obj;
 	// if not found, returns -1.
 	public int indexOf(Nucleotide obj) {
-		int j = 0;
-		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i.getNext()) {
-			if (i.getValue().equals(obj)) {
-				return j++;
+		int index = 0;
+		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
+			if ((obj == null && i.getValue() == null) || i.getValue().equals(obj)) {
+				return index++;
 			}
-			j++;
+			index++;
 		}
 		return -1;
 	}
@@ -71,11 +78,11 @@ public class DoublyLinkedList {
 	// Adds obj to this collection.  Returns true if successful;
 	// otherwise returns false.
 	public boolean add(Nucleotide obj) {
-		ListNode2<Nucleotide> temp = getTail();
+		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
 		getTail().setNext(temp);
 		temp.setPrevious(getTail());
 		SENTINEL.setPrevious(temp);
-		temp.setValue(obj);
+		temp.setNext(SENTINEL);
 		nodeCount++;
 		return true;
 	}
@@ -98,6 +105,9 @@ public class DoublyLinkedList {
 
 	// Returns the i-th element.               
 	public Nucleotide get(int i) {
+		if (i < 0 || i >= size()) {
+			throw new IllegalArgumentException();
+		}
 		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
 			temp = temp.getNext();
@@ -107,11 +117,14 @@ public class DoublyLinkedList {
 
 	// Replaces the i-th element with obj and returns the old value.
 	public Nucleotide set(int i, Nucleotide obj) {
-		Nucleotide output = get(i);
+		if (i < 0 || i >= size()) {
+			throw new IllegalArgumentException();
+		}
 		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
 			temp = temp.getNext();
 		}
+		Nucleotide output = temp.getValue();
 		temp.setValue(obj);
 		return output;
 	}
@@ -120,38 +133,44 @@ public class DoublyLinkedList {
 	// of the list by one.
 	public void add(int i, Nucleotide obj) {
 		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
-		ListNode2<Nucleotide> head = getHead();
+		ListNode2<Nucleotide> node = getHead();
 		for (int j = 0; j < i; j++) {
-			head = head.getNext();
+			node = node.getNext();
 		}
-		temp.setPrevious(head);
-		temp.setNext(head.getNext());
-		head.getNext().setPrevious(temp);
-		head.setNext(temp);
+		temp.setPrevious(node);
+		temp.setNext(node.getNext());
+		node.getNext().setPrevious(temp);
+		node.setNext(temp);
 		nodeCount++;
+		if (i == nodeCount) {
+			temp.setNext(SENTINEL);
+		}
 	}
 
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public Nucleotide remove(int i) {
-		ListNode2<Nucleotide> head = getHead();
+		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
-			head = head.getNext();
+			temp = temp.getNext();
 		}
-		head.getPrevious().setNext(head.getNext());
-		head.getNext().setPrevious(head.getPrevious());
+		temp.getPrevious().setNext(temp.getNext());
+		temp.getNext().setPrevious(temp.getPrevious());
 		nodeCount--;
-		return head.getValue();
+		return temp.getValue();
 	}
 
 	// Returns a string representation of this list exactly like that for MyArrayList.
 	public String toString() {
+		if (nodeCount == 0) {
+			return "[]";
+		}
 		StringBuilder output = new StringBuilder(nodeCount);
 		output.append('[');
-		for (int i = 0; i < nodeCount; i++) {
-			output.append(get(i).toString() + ", ");
+		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL.getPrevious()) == false; i = i.getNext()) {
+			output.append(i.getValue().toString() + ", ");
 		}
-		output.append(getTail().toString() + "]");
+		output.append(getTail().getValue().toString() + "]");
 		return output.toString();
 	}
 	
