@@ -1,4 +1,3 @@
-
 public class DoublyLinkedList {
 	// Implements a circular doubly-linked list.
 
@@ -157,9 +156,6 @@ public class DoublyLinkedList {
 		node.getNext().setPrevious(temp);
 		node.setNext(temp);
 		nodeCount++;
-		if (i == nodeCount) {
-			temp.setNext(SENTINEL);
-		}
 	}
 
 	// Removes the i-th element and returns its value.

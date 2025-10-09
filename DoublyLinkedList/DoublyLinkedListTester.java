@@ -30,6 +30,7 @@ public class DoublyLinkedListTester {
         System.out.println(list.toString());
 
         list.remove(0);
+        list.add(C);
 
         System.out.println(list.toString());
         System.out.println("Tail: " + list.getTail().getValue());
@@ -38,7 +39,7 @@ public class DoublyLinkedListTester {
         System.out.println("Nodecount: " + list.size());
         System.out.println();
 
-        list2.remove(0);
+        list2.add(list2.size(), G);
 
         System.out.println(list2.toString());
         System.out.println("Tail: " + list2.getTail().getValue());
