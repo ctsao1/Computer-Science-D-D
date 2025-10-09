@@ -68,7 +68,7 @@ public class DoublyLinkedList {
 		int index = 0;
 		for (ListNode2<Nucleotide> i = getHead(); i.equals(SENTINEL) == false; i = i.getNext()) {
 			if ((obj == null && i.getValue() == null) || i.getValue().equals(obj)) {
-				return index++;
+				return index;
 			}
 			index++;
 		}
@@ -132,11 +132,19 @@ public class DoublyLinkedList {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Nucleotide obj) {
-		if (i < 0 || i >= size()) {
+		if (i < 0 || i > size()) {
 			throw new IndexOutOfBoundsException();
 		}
-		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
 		ListNode2<Nucleotide> node = getHead();
+		if (i == 0) {
+			ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj, SENTINEL, node);
+			return;
+		}
+		if (i == 0) {
+			ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj, getTail(), SENTINEL);
+			return;
+		}
+		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
 		for (int j = 0; j < i - 1; j++) {
 			node = node.getNext();
 		}
