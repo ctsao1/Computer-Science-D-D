@@ -38,7 +38,7 @@ public class DoublyLinkedListTester {
 
         System.out.println(list.toString());
 
-        list.deleteSegment(list2);
+        list.deleteSegment(list);
 
         System.out.println(list.toString());
 
