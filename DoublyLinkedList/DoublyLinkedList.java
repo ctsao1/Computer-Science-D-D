@@ -106,7 +106,7 @@ public class DoublyLinkedList {
 	// Returns the i-th element.               
 	public Nucleotide get(int i) {
 		if (i < 0 || i >= size()) {
-			throw new IllegalArgumentException();
+			throw new IndexOutOfBoundsException();
 		}
 		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
@@ -118,7 +118,7 @@ public class DoublyLinkedList {
 	// Replaces the i-th element with obj and returns the old value.
 	public Nucleotide set(int i, Nucleotide obj) {
 		if (i < 0 || i >= size()) {
-			throw new IllegalArgumentException();
+			throw new IndexOutOfBoundsException();
 		}
 		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
@@ -132,9 +132,12 @@ public class DoublyLinkedList {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Nucleotide obj) {
+		if (i < 0 || i >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode2<Nucleotide> temp = new ListNode2<Nucleotide>(obj);
 		ListNode2<Nucleotide> node = getHead();
-		for (int j = 0; j < i; j++) {
+		for (int j = 0; j < i - 1; j++) {
 			node = node.getNext();
 		}
 		temp.setPrevious(node);
@@ -150,6 +153,9 @@ public class DoublyLinkedList {
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public Nucleotide remove(int i) {
+		if (i < 0 || i >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		ListNode2<Nucleotide> temp = getHead();
 		for (int j = 0; j < i; j++) {
 			temp = temp.getNext();

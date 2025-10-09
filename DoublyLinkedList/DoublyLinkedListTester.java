@@ -1,6 +1,6 @@
 public class DoublyLinkedListTester {
     public static void main(String[] args) {
-        
+
 
         Nucleotide A = Nucleotide.A;
         Nucleotide G = Nucleotide.G;
@@ -29,6 +29,14 @@ public class DoublyLinkedListTester {
         System.out.println(list2.toString());
         System.out.println(list.toString());
 
+        list2.add(T);
+        list2.remove(0);
+
+        System.out.println(list2.toString());
+        System.out.println("Tail: " + list2.getTail().getValue());
+        System.out.println("Head: " + list2.getHead().getValue());
+        System.out.println("Sentinel: " + list2.getSentinel().getValue());
+
         // System.out.println(list.contains(Nucleotide.G));
         // System.out.println(list.contains(Nucleotide.A));
 
@@ -43,6 +51,7 @@ public class DoublyLinkedListTester {
         // System.out.println(list2.remove(G));
         // System.out.println(list2.toString());
 
-
+        // list2.add(3, A);
+        // System.out.println(list2.toString());
     }
 }
