@@ -198,6 +198,8 @@ public class DoublyLinkedList {
 		getTail().setNext(seg.getHead());
 		seg.getHead().setPrevious(getTail());
 		seg.getTail().setNext(SENTINEL);
+		SENTINEL.setPrevious(seg.getTail());
+		nodeCount = nodeCount + seg.size();
 	}
 	
 	// Like question 8 on the SinglyLinkedList test:
@@ -210,8 +212,8 @@ public class DoublyLinkedList {
 		if (amount > 16) {
 			amount = 16;
 		}
-		for (int i = index; i <= amount; i++) {
-			remove(i);
+		for (int i = 0; i < amount; i++) {
+			remove(index);
 		}
 	}
 	
@@ -221,14 +223,16 @@ public class DoublyLinkedList {
 	public boolean deleteSegment(DoublyLinkedList seg) {
 		int index = -1;
 		ListNode2<Nucleotide> node = getHead();
-		for (int i = 0; i < size() - seg.size(); i++) {
+		for (int i = 0; i <= size() - seg.size(); i++) {
 			ListNode2<Nucleotide> segNode = seg.getHead();
-			for (int j = 0; j < seg.size(); j++) {
-				if (node.equals(segNode) == false) {
+			ListNode2<Nucleotide> copy = node;
+			for (int j = 0; j < seg.size() - 1; j++) {
+				if (copy.getValue().equals(segNode.getValue()) == false) {
 					break;
 				}
 				segNode = segNode.getNext();
-				if (j == seg.size() - 1) {
+				copy = copy.getNext();
+				if (j == seg.size() - 2) {
 					index = i;
 				}
 			}
@@ -237,8 +241,11 @@ public class DoublyLinkedList {
 			}
 			node = node.getNext();
 		}
-		for (int i = 0; i < seg.size(); i++) {
-			remove(index);
+		if (index != -1) {
+			for (int i = 0; i < seg.size(); i++) {
+				remove(index);
+			}
+			return true;
 		}
 		return false;
 	}
