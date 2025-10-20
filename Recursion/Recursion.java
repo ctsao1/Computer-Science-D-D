@@ -3,7 +3,14 @@ public class Recursion {
 	// Prints the value of every node in the singly linked list with the given head,
 	// but in reverse
 	public static void printListInReverse(ListNode head) {
-
+		StringBuilder output = new StringBuilder();
+		if (head.getNext() == null) {
+			output.append(head.getValue() + " ");
+		} else {
+			printListInReverse(head.getNext());
+			output.append(head.getValue() + " ");
+		}
+		System.out.print(output.toString());
 	}
 
 	// For the given 2D array of Strings, replaces the String at index[r][c]
@@ -15,7 +22,12 @@ public class Recursion {
 	// Trying to infect outside the confines of the grid also has no effect
 	// Precondition: grid has no null entries
 	public static void infect(String[][] grid, int r, int c) {
-
+		if (grid[r][c].toLowerCase().equals("vaccinated") == false) {
+			grid[r][c] = "infected";
+			if (r - 1 >= 0) {
+				
+			}
+		}
 	}
 
 	// How many subsets are there of the numbers 1...n
