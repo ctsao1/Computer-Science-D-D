@@ -22,10 +22,13 @@ public class Recursion {
 	// Trying to infect outside the confines of the grid also has no effect
 	// Precondition: grid has no null entries
 	public static void infect(String[][] grid, int r, int c) {
-		if (grid[r][c].toLowerCase().equals("vaccinated") == false) {
-			grid[r][c] = "infected";
-			if (r - 1 >= 0) {
-				
+		if ((r >= 0 && r < grid.length) && (c >= 0 && c < grid[r].length)) {
+			if (grid[r][c].toLowerCase().equals("vaccinated") == false && grid[r][c].toLowerCase().equals("infected") == false) {
+				grid[r][c] = "infected";
+				infect(grid, r - 1, c);
+				infect(grid, r + 1, c);
+				infect(grid, r, c - 1);
+				infect(grid, r, c + 1);
 			}
 		}
 	}
@@ -38,7 +41,7 @@ public class Recursion {
 	// {1,2}, {2,3}, {3,4}, {1,2,3}, {1,2,4}, {1,3,4}, {1,2,3,4}
 	// Precondition: n > 0
 	public static long countNonConsecutiveSubsets(int n) {
-
+		
 	}
 
 	// A kid at the bottom of the stairs can jump up 1, 2, or 3 stairs at a time.
