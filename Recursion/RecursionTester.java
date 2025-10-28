@@ -2,6 +2,18 @@ public class RecursionTester {
     public static void main(String[] args) {
         
 
+        // // countWaysToJumpUpStairs
+        // System.out.println(Recursion.countWaysToJumpUpStairs(3));
+        // System.out.println(Recursion.countWaysToJumpUpStairs(4));
+        // System.out.println(Recursion.countWaysToJumpUpStairs(5));
+        // System.out.println(Recursion.countWaysToJumpUpStairs(10));
+
+        // // countNonConsecutiveSubsets
+        // System.out.println(Recursion.countNonConsecutiveSubsets(0));
+        // System.out.println(Recursion.countNonConsecutiveSubsets(1));
+        // System.out.println(Recursion.countNonConsecutiveSubsets(4));
+        // System.out.println(Recursion.countNonConsecutiveSubsets(6));
+
         // // Infect
         // String[][] row = new String[4][];
         // for (int i = 0; i < row.length; i++) {
