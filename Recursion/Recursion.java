@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Recursion {
 
 	// Prints the value of every node in the singly linked list with the given head,
@@ -80,8 +82,24 @@ public class Recursion {
 	// For example, subsets("abc") would print out "", "a", "b", "c", "ab", "ac",
 	// "bc", "abc"
 	// Order is your choice
-	public static void printSubsets(String str) {
+	private static ArrayList<String> addElement(ArrayList<String> strs, String a) {
+		for (int i = 0; i < strs.size(); i++) {
+			strs.set(i, a + strs.get(i));
+		}
+		return strs;
+	}
 
+	public static void printSubsets(String str) {
+		ArrayList<String> output = new ArrayList<String>(1);
+		output.add("");
+		if (str.length() == 1) {
+			addElement(output, str);
+		} else {
+			printSubsets(str.substring(0, output.size() - 2));
+		}
+		for (int i = 0; i < output.size(); i++) {
+			System.out.println(output.get(i));
+		}
 	}
 
 	// List contains a single String to start.
