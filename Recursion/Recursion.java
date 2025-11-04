@@ -83,19 +83,22 @@ public class Recursion {
 	// "bc", "abc"
 	// Order is your choice
 	private static ArrayList<String> addElement(ArrayList<String> strs, String a) {
-		for (int i = 0; i < strs.size(); i++) {
-			strs.set(i, a + strs.get(i));
+		int size = strs.size();
+		for (int i = 0; i < size; i++) {
+			strs.add(strs.get(i) + a);
 		}
 		return strs;
 	}
 
 	public static void printSubsets(String str) {
-		ArrayList<String> output = new ArrayList<String>(1);
+		ArrayList<String> output = new ArrayList<String>();
 		output.add("");
 		if (str.length() == 1) {
-			addElement(output, str);
+			output = addElement(output, str);
 		} else {
-			printSubsets(str.substring(0, output.size() - 2));
+			if (str.length() != 0) {
+				printSubsets(str.substring(str.length() - 1));
+			}
 		}
 		for (int i = 0; i < output.size(); i++) {
 			System.out.println(output.get(i));
