@@ -1,7 +1,10 @@
 public class RecursionTester {
     public static void main(String[] args) {
-        // printSubsets
-        Recursion.printSubsets("ab");
+        // solveHanoi
+        Recursion.solveHanoi(3);
+
+        // // printSubsets
+        // Recursion.printSubsets("ab");
 
         // // countWaysToJumpUpStairs
         // System.out.println(Recursion.countWaysToJumpUpStairs(3));

@@ -87,21 +87,18 @@ public class Recursion {
 		for (int i = 0; i < size; i++) {
 			strs.add(strs.get(i) + a);
 		}
+		
 		return strs;
 	}
 
 	public static void printSubsets(String str) {
 		ArrayList<String> output = new ArrayList<String>();
-		output.add("");
 		if (str.length() == 1) {
 			output = addElement(output, str);
 		} else {
 			if (str.length() != 0) {
-				printSubsets(str.substring(str.length() - 1));
+				
 			}
-		}
-		for (int i = 0; i < output.size(); i++) {
-			System.out.println(output.get(i));
 		}
 	}
 
@@ -134,8 +131,33 @@ public class Recursion {
 	// The towers are number 0, 1, 2, and each move should be of
 	// the form "1 -> 2", meaning "take the top disk of tower 1 and
 	// put it on tower 2" etc.
-	public static void solveHanoi(int startingDisks) {
+	private static void moveEvenStack(int disks) {
+		solveHanoi(disks - 1);
+	}
 
+	private static void moveOddStack(int disks) {
+
+	}
+
+	public static void solveHanoi(int startingDisks) {
+		int startPole = 0;
+		int endPole = 0;
+		if (startingDisks == 1) {
+			System.out.println("0 -> 2");
+		}
+		if (startingDisks == 2) {
+			System.out.println("0 -> 1");
+			System.out.println("0 -> 2");
+			startPole = 1;
+			endPole = 2;
+		} else {
+			if ((startingDisks) % 2 == 0) {
+				moveOddStack();
+			} else {
+				moveEvenStack();
+			}
+		}
+		System.out.println(startPole + " -> " + endPole);
 	}
 
 	// You are partaking in a scavenger hunt!
