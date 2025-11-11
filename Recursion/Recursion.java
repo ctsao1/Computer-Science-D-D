@@ -84,10 +84,13 @@ public class Recursion {
 	// Order is your choice
 	private static ArrayList<String> addElement(ArrayList<String> strs, String a) {
 		int size = strs.size();
+		if (strs.size() == 0) {
+			strs.add("");
+			strs.add(a);
+		}
 		for (int i = 0; i < size; i++) {
 			strs.add(strs.get(i) + a);
 		}
-		
 		return strs;
 	}
 
@@ -96,9 +99,13 @@ public class Recursion {
 		if (str.length() == 1) {
 			output = addElement(output, str);
 		} else {
-			if (str.length() != 0) {
-				
+			printSubsets(str.substring(0, str.length() - 1));
+			for (int i = 0; i < str.length(); i++) {
+				output = addElement(output, str.substring(i, i + 1));
 			}
+		}
+		for (int i = 0; i < output.size(); i++) {
+			System.out.println(output.get(i));
 		}
 	}
 
