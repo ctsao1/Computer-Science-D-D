@@ -115,7 +115,24 @@ public class Recursion {
 	// For example, permute("abc") could print out "abc", "acb", "bac", "bca",
 	// "cab", "cba"
 	// Order is your choice
+	private static void addElementAtEverySlot(ArrayList<String> strs, String a) {
+		for (int i = 0; i < strs.size(); i++) {
+			strs.add(i, a);
+			for (int j = 0; j < strs.size(); j++) {
+				System.out.print(strs.get(i));
+			}
+			System.out.println();
+			strs.remove(a);
+		}
+	}
+
 	public static void printPermutations(String str) {
+		ArrayList<String> output = new ArrayList<String>();
+		if (str.length() == 1) {
+			output.add(str);
+		} else {
+			printPermutations(str.substring(0, str.length() - 1));
+		}
 
 	}
 
