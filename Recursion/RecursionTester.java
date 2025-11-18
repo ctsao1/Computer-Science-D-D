@@ -3,7 +3,8 @@ public class RecursionTester {
         // // solveHanoi
         // Recursion.solveHanoi(3);
 
-        // print
+        // printPermutations
+        Recursion.printPermutations("abc");
 
         // // printSubsets
         // Recursion.printSubsets("a");

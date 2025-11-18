@@ -115,31 +115,35 @@ public class Recursion {
 	// For example, permute("abc") could print out "abc", "acb", "bac", "bca",
 	// "cab", "cba"
 	// Order is your choice
-	private static void addElementAtEverySlot(ArrayList<String> strs, String a) {
-		for (int i = 0; i < strs.size(); i++) {
-			strs.add(i, a);
-			for (int j = 0; j < strs.size(); j++) {
-				System.out.print(strs.get(i));
-			}
-			System.out.println();
-			strs.remove(a);
+	private static void permuteHelper(String using, String unused) {
+		if (unused.length() == 0) {
+			System.out.println(using);
+			return;
+		}
+		for (int i = 0; i < unused.length(); i++) {
+			String u = unused.substring(i, i + 1);
+			String newUsing = using + u;
+			String newUnused = unused.substring(0, i) + unused.substring(i + 1);
+			permuteHelper(newUsing, newUnused);
 		}
 	}
 
 	public static void printPermutations(String str) {
-		ArrayList<String> output = new ArrayList<String>();
-		if (str.length() == 1) {
-			output.add(str);
-		} else {
-			printPermutations(str.substring(0, str.length() - 1));
-		}
-
+		permuteHelper("", str);
 	}
 
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
-	public static void mergeSort(int[] ints) {
+	private static void mergeSorter() {
 
+	}
+
+	public static void mergeSort(int[] ints) {
+		
+
+		for (int i = 0; i < ints.length; i++) {
+			System.out.println(ints[i]);
+		}
 	}
 
 	// Performs a quickSort on the given array of ints
@@ -155,13 +159,6 @@ public class Recursion {
 	// The towers are number 0, 1, 2, and each move should be of
 	// the form "1 -> 2", meaning "take the top disk of tower 1 and
 	// put it on tower 2" etc.
-	private static void moveEvenStack(int disks) {
-		solveHanoi(disks - 1);
-	}
-
-	private static void moveOddStack(int disks) {
-
-	}
 
 	public static void solveHanoi(int startingDisks) {
 		int startPole = 0;
