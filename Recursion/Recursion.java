@@ -173,10 +173,8 @@ public class Recursion {
 
 	public static void solveHanoi(int startingDisks) {
 		if (startingDisks == 0) {
-			return;
+			;
 		}
-		int source = 0;
-		hanoiHelper(startingDisks - 1, source, startingDisks);
 
 	}
 
