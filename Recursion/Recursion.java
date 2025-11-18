@@ -134,15 +134,22 @@ public class Recursion {
 
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
-	private static void mergeSorter() {
-
+	private static int[] mergeSorter(int[] first, int[] second) {
+		
 	}
 
 	public static void mergeSort(int[] ints) {
-		
-
+		if (ints.length == 1) {
+			return ints;
+		}
+		int[] firstHalf = new int[ints.length / 2];
+		int[] secondHalf = new int[ints.length - firstHalf.length];
 		for (int i = 0; i < ints.length; i++) {
-			System.out.println(ints[i]);
+			if (i < ints.length) {
+				firstHalf[i] = ints[i];
+			} else {
+				secondHalf[i - ints.length] = ints[i];
+			}
 		}
 	}
 
