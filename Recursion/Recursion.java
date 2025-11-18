@@ -140,7 +140,7 @@ public class Recursion {
 
 	public static void mergeSort(int[] ints) {
 		if (ints.length == 1) {
-			return ints;
+			return;
 		}
 		int[] firstHalf = new int[ints.length / 2];
 		int[] secondHalf = new int[ints.length - firstHalf.length];
