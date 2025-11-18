@@ -1,10 +1,10 @@
 public class RecursionTester {
     public static void main(String[] args) {
-        // // solveHanoi
-        // Recursion.solveHanoi(3);
+        // solveHanoi
+        Recursion.solveHanoi(3);
 
-        // printPermutations
-        Recursion.printPermutations("abc");
+        // // printPermutations
+        // Recursion.printPermutations("abc");
 
         // // printSubsets
         // Recursion.printSubsets("a");
