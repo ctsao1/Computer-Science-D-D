@@ -167,25 +167,17 @@ public class Recursion {
 	// the form "1 -> 2", meaning "take the top disk of tower 1 and
 	// put it on tower 2" etc.
 
+	private static void hanoiHelper(int m, int sourse, int target) {
+
+	}
+
 	public static void solveHanoi(int startingDisks) {
-		int startPole = 0;
-		int endPole = 0;
-		if (startingDisks == 1) {
-			System.out.println("0 -> 2");
+		if (startingDisks == 0) {
+			return;
 		}
-		if (startingDisks == 2) {
-			System.out.println("0 -> 1");
-			System.out.println("0 -> 2");
-			startPole = 1;
-			endPole = 2;
-		} else {
-			if ((startingDisks) % 2 == 0) {
-				moveOddStack();
-			} else {
-				moveEvenStack();
-			}
-		}
-		System.out.println(startPole + " -> " + endPole);
+		int source = 0;
+		hanoiHelper(startingDisks - 1, source, startingDisks);
+
 	}
 
 	// You are partaking in a scavenger hunt!
