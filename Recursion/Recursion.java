@@ -135,7 +135,7 @@ public class Recursion {
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
 	private static int[] mergeSorter(int[] first, int[] second) {
-		
+		return new int[0];
 	}
 
 	public static void mergeSort(int[] ints) {
@@ -200,7 +200,7 @@ public class Recursion {
 	// time 9
 	// for a total of 20 points, so it would return 20.
 	public static int scavHunt(int[] times, int[] points) {
-
+		return 0;
 	}
 
 }
