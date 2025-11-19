@@ -104,7 +104,7 @@ public class Recursion {
 				output = addElement(output, str.substring(i, i + 1));
 			}
 		}
-		for (int i = 1; i < output.size(); i++) {
+		for (int i = 0; i < output.size(); i++) {
 			System.out.println(output.get(i));
 		}
 	}
