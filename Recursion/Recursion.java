@@ -79,30 +79,18 @@ public class Recursion {
 	// For example, subsets("abc") would print out "", "a", "b", "c", "ab", "ac",
 	// "bc", "abc"
 	// Order is your choice
-	private static ArrayList<String> addElement(ArrayList<String> strs, String a) {
-		int size = strs.size();
-		if (strs.size() == 0) {
-			strs.add(a);
+
+	private static void subsetHelper(String str, String current, int index) {
+		if (index == str.length()) {
+			System.out.println(current); // print the current subset
+			return;
 		}
-		for (int i = 0; i < size; i++) {
-			strs.add(strs.get(i) + a);
-		}
-		return strs;
+		subsetHelper(str, current + str.charAt(index), index + 1);
+		subsetHelper(str, current, index + 1);
 	}
 
 	public static void printSubsets(String str) {
-		ArrayList<String> output = new ArrayList<String>();
-		if (str.length() == 1) {
-			output = addElement(output, str);
-		} else {
-			printSubsets(str.substring(0, str.length() - 1));
-			for (int i = 0; i < str.length(); i++) {
-				output = addElement(output, str.substring(i, i + 1));
-			}
-		}
-		for (int i = 0; i < output.size(); i++) {
-			System.out.println(output.get(i));
-		}
+		
 	}
 
 	// List contains a single String to start.
