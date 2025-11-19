@@ -149,7 +149,7 @@ public class Recursion {
 	private static void merge(int[] ints, int[] temp, int first, int middle, int second) {
 		int i = first;
 		int j = middle + 1;
-		int k = second;
+		int k = 0;
 
 		while (i <= middle && j <= second) {
         if (ints[i] < ints[j]) {
