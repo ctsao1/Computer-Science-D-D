@@ -134,23 +134,54 @@ public class Recursion {
 
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
-	private static int[] mergeSorter(int[] first, int[] second) {
-		return new int[0];
+	private static void mergeHelper(int[] ints, int[] temp, int first, int second) {
+		if (first >= second) {
+			return;
+		}
+		int mid = (first + second) / 2;
+
+		mergeHelper(ints, temp, first, mid);
+		mergeHelper(ints, temp, mid + 1, second);
+
+		merge(ints, temp, first, mid, second);
+	}
+
+	private static void merge(int[] ints, int[] temp, int first, int middle, int second) {
+		int i = first;
+		int j = middle + 1;
+		int k = second;
+
+		while (i <= middle && j <= second) {
+        if (ints[i] < ints[j]) {
+            temp[k] = ints[i];
+            i++;
+        } else {
+            temp[k] = ints[j];
+            j++;
+        }
+        k++;
+    	}
+
+		while (i <= middle) {
+			temp[k] = ints[i];
+			i++;
+			k++;
+		}
+
+		while (j <= second) {
+			temp[k] = ints[j];
+			j++;
+			k++;
+		}
+
+		for (int p = first; p <= first; p++) {
+			ints[p] = temp[p];
+		}
 	}
 
 	public static void mergeSort(int[] ints) {
-		if (ints.length == 1) {
-			return;
-		}
-		int[] firstHalf = new int[ints.length / 2];
-		int[] secondHalf = new int[ints.length - firstHalf.length];
-		for (int i = 0; i < ints.length; i++) {
-			if (i < ints.length) {
-				firstHalf[i] = ints[i];
-			} else {
-				secondHalf[i - ints.length] = ints[i];
-			}
-		}
+		int[] temp = new int[ints.length];
+		mergeHelper(ints, temp, 0, ints.length - 1);	
 	}
 
 	// Performs a quickSort on the given array of ints
