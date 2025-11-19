@@ -5,14 +5,11 @@ public class Recursion {
 	// Prints the value of every node in the singly linked list with the given head,
 	// but in reverse
 	public static void printListInReverse(ListNode head) {
-		StringBuilder output = new StringBuilder();
-		if (head.getNext() == null) {
-			output.append(head.getValue() + " ");
-		} else {
-			printListInReverse(head.getNext());
-			output.append(head.getValue() + " ");
-		}
-		System.out.println(output.toString());
+		if (head == null) {
+        return; // base case: end of the list
+    	}
+		printListInReverse(head.getNext()); // recursive call on the rest of the list
+		System.out.println(head.getValue());
 	}
 
 	// For the given 2D array of Strings, replaces the String at index[r][c]
