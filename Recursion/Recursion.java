@@ -118,55 +118,58 @@ public class Recursion {
 
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
-	private static void mergeHelper(int[] ints, int[] temp, int first, int second) {
-		if (first >= second) {
-			return;
-		}
-		int mid = (first + second) / 2;
-
-		mergeHelper(ints, temp, first, mid);
-		mergeHelper(ints, temp, mid + 1, second);
-
-		merge(ints, temp, first, mid, second);
+	
+	public static void mergeSort(int[] ints) {
+		int[] temp = new int[ints.length];
+		mergeSortHelper(ints, temp, 0, ints.length - 1);
 	}
 
-	private static void merge(int[] ints, int[] temp, int first, int middle, int second) {
-		int i = first;
-		int j = middle + 1;
-		int k = 0;
+	private static void mergeSortHelper(int[] ints, int[] temp, int left, int right) {
+		if (left >= right) {
+			return; 
+		}
 
-		while (i <= middle && j <= second) {
-        if (ints[i] < ints[j]) {
-            temp[k] = ints[i];
-            i++;
-        } else {
-            temp[k] = ints[j];
-            j++;
-        }
-        k++;
-    	}
+		int mid = (left + right) / 2;
 
-		while (i <= middle) {
+		mergeSortHelper(ints, temp, left, mid);
+		mergeSortHelper(ints, temp, mid + 1, right);
+
+		merge(ints, temp, left, mid, right);
+	}
+
+	private static void merge(int[] ints, int[] temp, int left, int mid, int right) {
+		int i = left;
+		int j = mid + 1;
+		int k = 0; 
+
+		while (i <= mid && j <= right) {
+			if (ints[i] < ints[j]) {
+				temp[k] = ints[i];
+				i++;
+			} else {
+				temp[k] = ints[j];
+				j++;
+			}
+			k++;
+		}
+
+		while (i <= mid) {
 			temp[k] = ints[i];
 			i++;
 			k++;
 		}
 
-		while (j <= second) {
+		while (j <= right) {
 			temp[k] = ints[j];
 			j++;
 			k++;
 		}
 
-		for (int p = first; p <= first; p++) {
-			ints[p] = temp[p];
+		for (k = 0; k < right - left + 1; k++) {
+			ints[left + k] = temp[k];
 		}
 	}
 
-	public static void mergeSort(int[] ints) {
-		int[] temp = new int[ints.length];
-		mergeHelper(ints, temp, 0, ints.length - 1);	
-	}
 
 	// Performs a quickSort on the given array of ints
 	// Use the middle element (index n/2) as the pivot
