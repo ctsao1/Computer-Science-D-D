@@ -119,11 +119,6 @@ public class Recursion {
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
 	
-	public static void mergeSort(int[] ints) {
-		int[] temp = new int[ints.length];
-		mergeSortHelper(ints, temp, 0, ints.length - 1);
-	}
-
 	private static void mergeSortHelper(int[] ints, int[] temp, int left, int right) {
 		if (left >= right) {
 			return; 
@@ -170,12 +165,51 @@ public class Recursion {
 		}
 	}
 
+	public static void mergeSort(int[] ints) {
+		int[] temp = new int[ints.length];
+		mergeSortHelper(ints, temp, 0, ints.length - 1);
+	}
 
 	// Performs a quickSort on the given array of ints
 	// Use the middle element (index n/2) as the pivot
 	// Precondition: you may assume there are NO duplicates!!!
-	public static void quickSort(int[] ints) {
+	private static void quickHelper(int[] ints, int left, int right) {
+		if (left >= right) {
+			return; 
+		}
 
+		int pivotIndex = left + (right - left) / 2;
+		int pivot = ints[pivotIndex];
+
+		int i = left;
+		int j = right;
+
+		while (i <= j) {
+			while (ints[i] < pivot) {
+				i++;
+			}
+			while (ints[j] > pivot) {
+				j--;
+			}
+			if (i <= j) {
+				int temp = ints[i];
+				ints[i] = ints[j];
+				ints[j] = temp;
+				i++;
+				j--;
+			}
+		}
+
+		if (left < j) {
+			quickHelper(ints, left, j);
+		}
+		if (i < right) {
+			quickHelper(ints, i, right);
+		}
+	}
+
+	public static void quickSort(int[] ints) {
+		quickHelper(ints, 0, ints.length - 1);
 	}
 
 	// Prints a sequence of moves (one on each line)
