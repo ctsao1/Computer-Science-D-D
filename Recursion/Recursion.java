@@ -12,7 +12,7 @@ public class Recursion {
 			printListInReverse(head.getNext());
 			output.append(head.getValue() + " ");
 		}
-		System.out.print(output.toString());
+		System.out.println(output.toString());
 	}
 
 	// For the given 2D array of Strings, replaces the String at index[r][c]
