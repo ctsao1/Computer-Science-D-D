@@ -85,7 +85,6 @@ public class Recursion {
 	private static ArrayList<String> addElement(ArrayList<String> strs, String a) {
 		int size = strs.size();
 		if (strs.size() == 0) {
-			strs.add("");
 			strs.add(a);
 		}
 		for (int i = 0; i < size; i++) {
@@ -231,8 +230,36 @@ public class Recursion {
 	// Then the best possible result is getting the item at time 3 and the one at
 	// time 9
 	// for a total of 20 points, so it would return 20.
+	private static int scavHuntHelper(int[] times, int[] points, int index) {
+		if (index >= times.length) {
+			return 0; // base case: no more items
+		}
+
+		// Option 1: skip current item
+		int skip = scavHuntHelper(times, points, index + 1);
+
+		// Option 2: take current item
+		int take = points[index];
+
+		// find the next item we can take (time difference >= 5)
+		int nextIndex = index + 1;
+		while (nextIndex < times.length && times[nextIndex] - times[index] < 5) {
+			nextIndex++;
+		}
+
+		take += scavHuntHelper(times, points, nextIndex);
+
+		// return the max of taking or skipping the current item
+		if (take > skip) {
+			return take;
+		} else {
+			return skip;
+		}
+	}
+
+	
 	public static int scavHunt(int[] times, int[] points) {
-		return 0;
+		return scavHuntHelper(times, points, 0);
 	}
 
 }

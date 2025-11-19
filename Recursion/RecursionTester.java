@@ -8,8 +8,8 @@ public class RecursionTester {
 
         // printSubsets
         Recursion.printSubsets("a");
-        // Recursion.printSubsets("ab");
-        // Recursion.printSubsets("abc");
+        Recursion.printSubsets("ab");
+        Recursion.printSubsets("abc");
 
         // // countWaysToJumpUpStairs
         // System.out.println(Recursion.countWaysToJumpUpStairs(3));
