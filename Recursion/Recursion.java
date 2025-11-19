@@ -82,7 +82,7 @@ public class Recursion {
 
 	private static void subsetHelper(String str, String current, int index) {
 		if (index == str.length()) {
-			System.out.println(current); // print the current subset
+			System.out.println(current);
 			return;
 		}
 		subsetHelper(str, current + str.charAt(index), index + 1);
@@ -90,7 +90,7 @@ public class Recursion {
 	}
 
 	public static void printSubsets(String str) {
-		
+		subsetHelper(str, "", 0);
 	}
 
 	// List contains a single String to start.
