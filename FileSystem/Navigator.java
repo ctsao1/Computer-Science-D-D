@@ -207,4 +207,5 @@ public class Navigator {
                 System.out.println("Unrecognized command: " + command);
         }
     }
+
 }
