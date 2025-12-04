@@ -14,7 +14,6 @@ public class FolderNode extends FileSystemNode {
         this.children = new ArrayList<>();
     }
 
-
     @Override
     public boolean isFolder() {
         return true;
@@ -26,7 +25,7 @@ public class FolderNode extends FileSystemNode {
      */
     public List<FileSystemNode> getChildren() {
         // TODO: return the list of child nodes (possibly a defensive copy)
-        return null;
+        return children;
     }
 
     /**
@@ -35,7 +34,22 @@ public class FolderNode extends FileSystemNode {
      */
     public FileSystemNode getChildByName(String childName) {
         // TODO: scan children for a matching name and return the node if found
+        for (int i = 0; i < children.size(); i++) {
+            if (children.get(i).getName().equals(childName)) {
+                return children.get(i);
+            }
+        }
         return null;
+    }
+
+    /*
+    Checks if the name of the file is unique, returns true if is unique, false otherwise
+    */
+    private boolean uniquenessCheck(String name) {
+        if (getChildByName(name) == null) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -45,7 +59,11 @@ public class FolderNode extends FileSystemNode {
      */
     public boolean addFile(String fileName, int size) {
         // TODO: implement uniqueness check and insertion of a new FileNode
-        return false;
+        if (uniquenessCheck(fileName) == false) {
+            return false;
+        }
+        children.add(new FileNode(this, fileName, size));
+        return true;
     }
 
     /**
@@ -55,7 +73,11 @@ public class FolderNode extends FileSystemNode {
      */
     public boolean addFolder(String folderName) {
         // TODO: implement uniqueness check and insertion of a new FolderNode
-        return false;
+        if (uniquenessCheck(folderName) == false) {
+            return false;
+        }
+        children.add(new FolderNode(folderName, this));
+        return true;
     }
 
     /**
@@ -64,6 +86,16 @@ public class FolderNode extends FileSystemNode {
      */
     public boolean containsNameRecursive(String searchName) {
         // TODO: check this directory and all descendants for the given name
+        if (getChildByName(searchName) != null) {
+            System.out.println(getChildByName(searchName).toString());
+            return true;
+        }
+        for (int i = 0; i < children.size(); i++) {
+            if (children.get(i).isFolder() == true) {
+                FolderNode child = (FolderNode) children.get(i);
+                child.containsNameRecursive(searchName);
+            }
+        }
         return false;
     }
 

@@ -34,13 +34,21 @@ public class FileSystemTester {
         // 2. Build a small structure under root
         System.out.println("\n=== Building tree structure under root ===");
         boolean addedDocs = root.addFolder("docs");
+        System.out.println(addedDocs);
         boolean addedSrc = root.addFolder("src");
+        System.out.println(addedSrc);
         boolean addedMainJava = root.addFile("main.java", 120);
+        System.out.println(addedMainJava);
         boolean addedReadme = root.addFile("README.md", 80);
+        System.out.println(addedReadme);
 
         int depthRoot = root.getDepth();
+        System.out.println(depthRoot);
         int heightRoot = root.getHeight();
+        System.out.println(heightRoot);
         int sizeRoot = root.getSize();
+        System.out.println(sizeRoot);
         int totalNodesRoot = root.getTotalNodeCount();
+        System.out.println(totalNodesRoot);
     }
 }
