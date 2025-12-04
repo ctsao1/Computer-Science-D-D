@@ -66,7 +66,9 @@ public abstract class FileSystemNode {
      */
     @Override
     public String toString() {
-        // TODO: build a string like "/root/folder/subfolder/file"
-        return null;
+        if (getParent() == null) {
+            return "/";
+        }
+        return this.toString() + this.getName() + "/";
     }
 }
