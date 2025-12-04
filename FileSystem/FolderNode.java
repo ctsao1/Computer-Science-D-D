@@ -93,7 +93,9 @@ public class FolderNode extends FileSystemNode {
         for (int i = 0; i < children.size(); i++) {
             if (children.get(i).isFolder() == true) {
                 FolderNode child = (FolderNode) children.get(i);
-                child.containsNameRecursive(searchName);
+                if (child.containsNameRecursive(searchName) == true) {
+                    return true;
+                }
             }
         }
         return false;
@@ -102,18 +104,52 @@ public class FolderNode extends FileSystemNode {
     @Override
     public int getHeight() {
         // TODO: compute the maximum height among children; empty folders have value 0
-        return 0;
+        if (children.size() == 0) {
+            return 0;
+        }
+        ArrayList<Integer> heights = new ArrayList<Integer>();
+        int output = 0;
+        for (int i = 0; i < children.size(); i++) {
+            heights.add(children.get(i).getHeight());
+        }
+        for (int i = 0; i < heights.size(); i++) {
+            if (heights.get(i) > output) {
+                output = heights.get(i);
+            }
+        }
+        return output + 1;
     }
 
     @Override
     public int getSize() {
         // TODO: sum the sizes of all files contained in this directory and its descendants
-        return 0;
+        if (children.size() == 0) {
+            if (isFolder() == true) {
+                return 0;
+            }
+            return getSize();
+        }
+        int output = 0;
+        for (int i = 0; i < children.size(); i++) {
+            output += children.get(i).getSize();
+        }
+        return output;
     }
 
     @Override
     public int getTotalNodeCount() {
         // TODO: count this directory plus all descendant files and folders
-        return 0;
+        if (children.size() == 0) {
+            return 1;
+        }
+        int output = 1;
+        for (int i = 0; i < children.size(); i++) {
+            if (children.get(i).isFolder() == true) {
+                output += children.get(i).getTotalNodeCount();
+            } else {
+                output++;
+            }
+        }
+        return output;
     }
 }

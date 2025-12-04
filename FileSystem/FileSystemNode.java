@@ -74,6 +74,6 @@ public abstract class FileSystemNode {
         if (getParent() == null) {
             return "/";
         }
-        return this.toString() + this.getName() + "/";
+        return this.getParent().toString() + this.getName() + "/";
     }
 }
