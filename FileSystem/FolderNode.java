@@ -62,7 +62,7 @@ public class FolderNode extends FileSystemNode {
         if (uniquenessCheck(fileName) == false) {
             return false;
         }
-        children.add(new FileNode(this, fileName, size));
+        children.add(new FileNode(fileName, this, size));
         return true;
     }
 

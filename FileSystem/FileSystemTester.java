@@ -54,5 +54,8 @@ public class FileSystemTester {
         System.out.println(totalNodesRoot);
         root.containsNameRecursive("README.md");
         System.out.println(root.containsNameRecursive("Balls"));
+
+        Navigator nav = new Navigator(tree);
+        nav.run();
     }
 }

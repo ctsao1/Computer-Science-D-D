@@ -46,8 +46,49 @@ public class Navigator {
      *   - Paths starting with "/" are interpreted from the root directory.
      *   - Other paths are interpreted relative to the current directory.
      */
+
+    private String[] splitSlashes(String args) {
+        if (args.equals("/")) {
+            String[] parts = {args};
+            return parts;
+        }
+        String[] parts = args.trim().split("/");
+        if (args.charAt(0) == '/') {
+            String[] partss = new String[1 + parts.length];
+            partss[0] = "/";
+            for (int i = 1; i < parts.length; i++) {
+                partss[i] = parts[i - 1];
+            }
+        }
+        return parts;
+    }
+
     private void cd(String[] args) {
         // TODO: implement directory navigation
+        args = splitSlashes(args[0]);
+        if (args[0].equals(".")) {
+            
+        }
+        if (args[0].equals("..")) {
+            currentDirectory = currentDirectory.getParent();
+        } if (args[0] == "/") {
+            currentDirectory = fileSystem.getRoot();
+        }
+        else {
+            currentDirectory = (FolderNode) currentDirectory.getChildByName(args[0]);
+        }
+        for (int i = 1; i < args.length; i++) {
+            if (currentDirectory.getChildByName(args[0]) == null) {
+                System.out.println("One of the folders in the your command doesn't exist");
+                return;
+            }
+            if (currentDirectory.getChildByName(args[0]).isFolder() == false) {
+                System.out.println("One of the things in your command isn't a folder");
+                return;
+            }
+            currentDirectory = (FolderNode) currentDirectory.getChildByName(args[i]);
+        }
+
     }
 
     /**
