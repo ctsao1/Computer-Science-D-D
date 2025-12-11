@@ -47,6 +47,10 @@ public class Navigator {
      *   - Other paths are interpreted relative to the current directory.
      */
 
+    private void toStringWithoutEnd(String str) {
+        System.out.println(str.substring(0, str.length() - 1));
+    }
+
     private String[] moveOneDown(String[] parts) {
         String[] temp = new String[parts.length - 1];
         for (int i = 0; i < temp.length; i++) {
@@ -63,8 +67,6 @@ public class Navigator {
         String[] parts = args.trim().split("/");
         if (args.charAt(0) == '/') {
             parts[0] = "/";
-        } else {
-            parts = moveOneDown(parts);
         }
         return parts;
     }
@@ -119,7 +121,11 @@ public class Navigator {
     private void ls(String[] args) {
         // TODO: print names of all child nodes of currentDirectory
         for (int i = 0; i < currentDirectory.getChildren().size(); i++) {
+            if (currentDirectory.getChildren().get(i).isFolder() == true) {
+                System.out.println(currentDirectory.getChildren().get(i).toString().substring(1, currentDirectory.getChildren().get(i).toString().length()));
+            } else {
             System.out.println(currentDirectory.getChildren().get(i).toString().substring(1, currentDirectory.getChildren().get(i).toString().length() - 1));
+            }
         }
     }
 
@@ -145,6 +151,7 @@ public class Navigator {
      */
     private void find(String[] args) {
         // TODO: use recursive search starting at currentDirectory
+        currentDirectory.containsNameRecursive(args[0]);
     }
 
     /**
@@ -152,6 +159,11 @@ public class Navigator {
      */
     private void pwd(String[] args) {
         // TODO: use currentDirectory.toString() or similar path builder
+        if (currentDirectory.getName().equals("/")) {
+            System.out.println("/");
+            return;
+        }
+        toStringWithoutEnd(currentDirectory.toString());
     }
 
     /**
@@ -168,6 +180,7 @@ public class Navigator {
      */
     private void count(String[] args) {
         // TODO: call a counting method on currentDirectory
+        currentDirectory.getTotalNodeCount();
     }
 
     /**
@@ -183,6 +196,7 @@ public class Navigator {
      */
     private void depth(String[] args) {
         // TODO: use a depth method on currentDirectory
+        currentDirectory.getDepth();
     }
 
     /**
@@ -192,6 +206,7 @@ public class Navigator {
      */
     private void height(String[] args) {
         // TODO: use a height method on currentDirectory
+        currentDirectory.getHeight();
     }
 
     /**
