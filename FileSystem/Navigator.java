@@ -47,6 +47,14 @@ public class Navigator {
      *   - Other paths are interpreted relative to the current directory.
      */
 
+    private String[] moveOneDown(String[] parts) {
+        String[] temp = new String[parts.length - 1];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = parts[i + 1];
+        }
+        return temp;
+    }
+
     private String[] splitSlashes(String args) {
         if (args.equals("/")) {
             String[] parts = {args};
@@ -54,30 +62,44 @@ public class Navigator {
         }
         String[] parts = args.trim().split("/");
         if (args.charAt(0) == '/') {
-            String[] partss = new String[1 + parts.length];
-            partss[0] = "/";
-            for (int i = 1; i < parts.length; i++) {
-                partss[i] = parts[i - 1];
-            }
+            parts[0] = "/";
+        } else {
+            parts = moveOneDown(parts);
         }
         return parts;
     }
 
     private void cd(String[] args) {
         // TODO: implement directory navigation
+        if (args.length == 0) {
+            return;
+        }
         args = splitSlashes(args[0]);
         if (args[0].equals(".")) {
-            
-        }
-        if (args[0].equals("..")) {
-            currentDirectory = currentDirectory.getParent();
-        } if (args[0] == "/") {
+            if (currentDirectory != null) {
+                args[0] = currentDirectory.getName();
+            } else {
+                return;
+            }
+            args = moveOneDown(args);
+        } if (args[0].equals("..")) {
+            if (currentDirectory == fileSystem.getRoot()) {
+                currentDirectory = fileSystem.getRoot();
+            } else {
+                currentDirectory = currentDirectory.getParent();
+            }
+            args = moveOneDown(args);
+        } if (args[0].equals("/")) {
             currentDirectory = fileSystem.getRoot();
-        }
-        else {
+            args = moveOneDown(args);
+        } else {
             currentDirectory = (FolderNode) currentDirectory.getChildByName(args[0]);
         }
         for (int i = 1; i < args.length; i++) {
+            if (currentDirectory == null) {
+                System.out.println("Not currently in a folder");
+                return;
+            }
             if (currentDirectory.getChildByName(args[0]) == null) {
                 System.out.println("One of the folders in the your command doesn't exist");
                 return;
@@ -88,7 +110,6 @@ public class Navigator {
             }
             currentDirectory = (FolderNode) currentDirectory.getChildByName(args[i]);
         }
-
     }
 
     /**
@@ -97,6 +118,9 @@ public class Navigator {
      */
     private void ls(String[] args) {
         // TODO: print names of all child nodes of currentDirectory
+        for (int i = 0; i < currentDirectory.getChildren().size(); i++) {
+            System.out.println(currentDirectory.getChildren().get(i).toString().substring(1, currentDirectory.getChildren().get(i).toString().length() - 1));
+        }
     }
 
     /**
@@ -104,6 +128,7 @@ public class Navigator {
      */
     private void mkdir(String[] args) {
         // TODO: read folder name from args and delegate to currentDirectory.addFolder(...)
+        currentDirectory.addFolder(args[0]);
     }
 
     /**
@@ -111,6 +136,7 @@ public class Navigator {
      */
     private void touch(String[] args) {
         // TODO: read file name and size from args and delegate to currentDirectory.addFile(...)
+        currentDirectory.addFile(args[0], Integer.parseInt(args[1]));
     }
 
     /**
