@@ -138,7 +138,9 @@ public class Navigator {
      */
     private void find(String[] args) {
         // TODO: use recursive search starting at currentDirectory
-        currentDirectory.containsNameRecursive(args[0]);
+        if (currentDirectory.containsNameRecursive(args[0]) == true) {
+            toStringWithoutEnd(currentDirectory.getChildByName(args[0]).toString());
+        }
     }
 
     /**
@@ -167,14 +169,14 @@ public class Navigator {
      */
     private void count(String[] args) {
         // TODO: call a counting method on currentDirectory
-        currentDirectory.getTotalNodeCount();
+        System.out.println(currentDirectory.getTotalNodeCount());
     }
 
     /**
      * Prints the total size of all files reachable from the current directory.
      */
     private void size(String[] args) {
-        // TODO: call a size-calculation method on currentDirectory
+        System.out.println(currentDirectory.getChildByName(args[0]).getSize());
     }
 
     /**
@@ -183,7 +185,7 @@ public class Navigator {
      */
     private void depth(String[] args) {
         // TODO: use a depth method on currentDirectory
-        currentDirectory.getDepth();
+        System.out.println(currentDirectory.getDepth());
     }
 
     /**
@@ -193,7 +195,7 @@ public class Navigator {
      */
     private void height(String[] args) {
         // TODO: use a height method on currentDirectory
-        currentDirectory.getHeight();
+        System.out.println(currentDirectory.getHeight());
     }
 
     /**
