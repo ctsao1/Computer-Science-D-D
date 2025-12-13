@@ -77,12 +77,15 @@ public class Navigator {
         }
         args = splitSlashes(args[0]);
         if (args[0].equals(".")) {
-            args = moveOneDown(args);
+            args[0] = currentDirectory.getName();
         } if (args[0].equals("..") && currentDirectory != fileSystem.getRoot()) {
             args[0] = currentDirectory.getParent().getName();
         } if (args[0].equals("/")) {
             currentDirectory = fileSystem.getRoot();
             args = moveOneDown(args);
+        }
+        if (args.length == 1 && (args[0].equals("..") || args[0].equals(currentDirectory.getName()))) {
+            return;
         }
         for (int i = 0; i < args.length; i++) {
             if (currentDirectory.getChildByName(args[0]) == null) {
