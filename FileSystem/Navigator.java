@@ -60,10 +60,6 @@ public class Navigator {
     }
 
     private String[] splitSlashes(String args) {
-        if (args.equals("/")) {
-            String[] parts = {args};
-            return parts;
-        }
         String[] parts = args.trim().split("/");
         if (args.charAt(0) == '/') {
             parts[0] = "/";
@@ -78,32 +74,13 @@ public class Navigator {
         }
         args = splitSlashes(args[0]);
         if (args[0].equals(".")) {
-            if (currentDirectory != null) {
-                args[0] = currentDirectory.getName();
-            } else {
-                return;
-            }
             args = moveOneDown(args);
-        } if (args[0].equals("..")) {
-            if (currentDirectory == fileSystem.getRoot()) {
-                currentDirectory = fileSystem.getRoot();
-            } else {
-                currentDirectory = currentDirectory.getParent();
-            }
-            args = moveOneDown(args);
-        } if (args[0].equals("/")) {
-            currentDirectory = fileSystem.getRoot();
-            args = moveOneDown(args);
-        } else {
-            currentDirectory = (FolderNode) currentDirectory.getChildByName(args[0]);
-        }
-        for (int i = 1; i < args.length; i++) {
-            if (currentDirectory == null) {
-                System.out.println("Not currently in a folder");
-                return;
-            }
+        } if (args[0].equals("..") && currentDirectory != fileSystem.getRoot()) {
+            args[0] = currentDirectory.getParent().getName();
+        } 
+        for (int i = 0; i < args.length; i++) {
             if (currentDirectory.getChildByName(args[0]) == null) {
-                System.out.println("One of the folders in the your command doesn't exist");
+                System.out.println("No such directory");
                 return;
             }
             if (currentDirectory.getChildByName(args[0]).isFolder() == false) {
