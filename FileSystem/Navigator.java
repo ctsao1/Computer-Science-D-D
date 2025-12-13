@@ -61,6 +61,9 @@ public class Navigator {
 
     private String[] splitSlashes(String args) {
         String[] parts = args.trim().split("/");
+        if (args.equals("/")) {
+            return new String[] {"/"};
+        }
         if (args.charAt(0) == '/') {
             parts[0] = "/";
         }
@@ -77,7 +80,10 @@ public class Navigator {
             args = moveOneDown(args);
         } if (args[0].equals("..") && currentDirectory != fileSystem.getRoot()) {
             args[0] = currentDirectory.getParent().getName();
-        } 
+        } if (args[0].equals("/")) {
+            currentDirectory = fileSystem.getRoot();
+            args = moveOneDown(args);
+        }
         for (int i = 0; i < args.length; i++) {
             if (currentDirectory.getChildByName(args[0]) == null) {
                 System.out.println("No such directory");

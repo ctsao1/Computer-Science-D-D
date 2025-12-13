@@ -43,17 +43,7 @@ public class FileSystemTester {
         System.out.println(addedReadme);
         FolderNode src = (FolderNode) root.getChildByName("src");
         src.addFile("Balls", 100);
-
-        int depthRoot = root.getDepth();
-        System.out.println(depthRoot);
-        int heightRoot = root.getHeight();
-        System.out.println(heightRoot);
-        int sizeRoot = root.getSize();
-        System.out.println(sizeRoot);
-        int totalNodesRoot = root.getTotalNodeCount();
-        System.out.println(totalNodesRoot);
-        root.containsNameRecursive("README.md");
-        System.out.println(root.containsNameRecursive("Balls"));
+        System.out.println();
 
         Navigator nav = new Navigator(tree);
         nav.run();
