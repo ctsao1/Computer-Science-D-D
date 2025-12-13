@@ -42,7 +42,9 @@ public class FileSystemTester {
         boolean addedReadme = root.addFile("README.md", 80);
         System.out.println(addedReadme);
         FolderNode src = (FolderNode) root.getChildByName("src");
+        FolderNode docs = (FolderNode) root.getChildByName("docs");
         src.addFile("Balls", 100);
+        docs.addFolder("projects");
         System.out.println();
 
         Navigator nav = new Navigator(tree);
