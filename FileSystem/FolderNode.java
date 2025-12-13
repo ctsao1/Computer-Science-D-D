@@ -87,7 +87,7 @@ public class FolderNode extends FileSystemNode {
     public boolean containsNameRecursive(String searchName) {
         // TODO: check this directory and all descendants for the given name
         if (getChildByName(searchName) != null) {
-            System.out.println(getChildByName(searchName).toString());
+            System.out.println(getChildByName(searchName).toString().substring(0, getChildByName(searchName).toString().length() - 1));
             return true;
         }
         for (int i = 0; i < children.size(); i++) {

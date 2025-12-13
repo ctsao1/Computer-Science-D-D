@@ -138,9 +138,7 @@ public class Navigator {
      */
     private void find(String[] args) {
         // TODO: use recursive search starting at currentDirectory
-        if (currentDirectory.containsNameRecursive(args[0]) == true) {
-            toStringWithoutEnd(currentDirectory.getChildByName(args[0]).toString());
-        }
+        currentDirectory.containsNameRecursive(args[0]);
     }
 
     /**
@@ -195,7 +193,7 @@ public class Navigator {
      */
     private void height(String[] args) {
         // TODO: use a height method on currentDirectory
-        System.out.println(currentDirectory.getHeight());
+        System.out.println(currentDirectory.getChildByName(args[0]).getHeight());
     }
 
     /**

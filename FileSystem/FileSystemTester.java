@@ -42,7 +42,7 @@ public class FileSystemTester {
         System.out.println(ballz.getDepth());
         System.out.println();
 
-        System.out.println();
+        System.out.println(root.containsNameRecursive("Balls"));
 
         Navigator nav = new Navigator(tree);
         // Navigator nav2 = new Navigator(tree2);
