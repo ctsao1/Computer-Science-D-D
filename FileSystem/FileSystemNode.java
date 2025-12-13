@@ -40,7 +40,7 @@ public abstract class FileSystemNode {
     public int getDepth() {
         int depth = 0;
         FileSystemNode temp = this;
-        while (getParent() != null) {
+        while (temp.getParent() != null) {
             temp = temp.getParent();
             depth++;
         }

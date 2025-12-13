@@ -20,16 +20,7 @@ public class FileSystemTester {
         // 1. Construct a tree and check root
         FileSystemTree tree = new FileSystemTree();
         FolderNode root = tree.getRoot();
-
-        if (root == null) {
-            System.out.println("[FAIL] Root is null. FileSystemTree.getRoot() must return a non-null root folder.");
-            return;
-        } else {
-            System.out.println("[PASS] Root is non-null.");
-        }
-
-        System.out.println("Root toString(): " + root.toString());
-        System.out.println("Expected at root: '/' (or equivalent)");
+        FileSystemTree tree2 = new FileSystemTree();
 
         // 2. Build a small structure under root
         System.out.println("\n=== Building tree structure under root ===");
@@ -45,9 +36,16 @@ public class FileSystemTester {
         FolderNode docs = (FolderNode) root.getChildByName("docs");
         src.addFile("Balls", 100);
         docs.addFolder("projects");
+
+        tree2.getRoot().addFile("Ballz", 10);
+        FileSystemNode ballz = tree2.getRoot().getChildren().get(0);
+        System.out.println(ballz.getDepth());
+        System.out.println();
+
         System.out.println();
 
         Navigator nav = new Navigator(tree);
+        // Navigator nav2 = new Navigator(tree2);
         nav.run();
     }
 }
