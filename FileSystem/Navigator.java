@@ -174,7 +174,7 @@ public class Navigator {
      * Prints the total size of all files reachable from the current directory.
      */
     private void size(String[] args) {
-        System.out.println(currentDirectory.getChildByName(args[0]).getSize());
+        System.out.println(currentDirectory.getSize());
     }
 
     /**
