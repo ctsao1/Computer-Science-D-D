@@ -167,7 +167,7 @@ public class Navigator {
      */
     private void count(String[] args) {
         // TODO: call a counting method on currentDirectory
-        System.out.println(currentDirectory.getTotalNodeCount());
+        System.out.println(currentDirectory.getTotalNodeCount() - 1);
     }
 
     /**
@@ -193,7 +193,7 @@ public class Navigator {
      */
     private void height(String[] args) {
         // TODO: use a height method on currentDirectory
-        System.out.println(currentDirectory.getChildByName(args[0]).getHeight());
+        System.out.println(currentDirectory.getHeight());
     }
 
     /**

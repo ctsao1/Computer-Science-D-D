@@ -34,10 +34,10 @@ public class FileSystemTester {
         System.out.println(addedReadme);
         FolderNode src = (FolderNode) root.getChildByName("src");
         FolderNode docs = (FolderNode) root.getChildByName("docs");
-        src.addFile("Balls", 100);
+        src.addFile("balls", 100);
         docs.addFolder("projects");
 
-        tree2.getRoot().addFile("Ballz", 10);
+        tree2.getRoot().addFile("ballz", 10);
         FileSystemNode ballz = tree2.getRoot().getChildren().get(0);
         System.out.println(ballz.getDepth());
         System.out.println();
