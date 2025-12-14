@@ -36,6 +36,8 @@ public class FileSystemTester {
         FolderNode docs = (FolderNode) root.getChildByName("docs");
         src.addFile("balls", 100);
         docs.addFolder("projects");
+        FolderNode projects = (FolderNode) docs.getChildByName("projects");
+        projects.addFile("deez", 10);
 
         tree2.getRoot().addFile("ballz", 10);
         FileSystemNode ballz = tree2.getRoot().getChildren().get(0);

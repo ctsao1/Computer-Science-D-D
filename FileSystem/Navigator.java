@@ -108,11 +108,7 @@ public class Navigator {
     private void ls(String[] args) {
         // TODO: print names of all child nodes of currentDirectory
         for (int i = 0; i < currentDirectory.getChildren().size(); i++) {
-            if (currentDirectory.getChildren().get(i).isFolder() == true) {
-                System.out.println(currentDirectory.getChildren().get(i).toString().substring(1, currentDirectory.getChildren().get(i).toString().length()));
-            } else {
-            System.out.println(currentDirectory.getChildren().get(i).toString().substring(1, currentDirectory.getChildren().get(i).toString().length() - 1));
-            }
+            toStringWithoutEnd(currentDirectory.getChildren().get(i).toString());
         }
     }
 
@@ -158,7 +154,33 @@ public class Navigator {
      * respecting flags or depth limits if provided by the arguments.
      */
     private void tree(String[] args) {
-        // TODO: implement tree-style printing with indentation and branch characters
+        FolderNode temp = currentDirectory;
+        if (args.length == 0) {
+            args = new String[] {currentDirectory.getName()};
+        } else {
+            currentDirectory = (FolderNode) currentDirectory.getChildByName(args[0]);
+        }
+        if (currentDirectory.getHeight() == 0) {
+            return;
+        }
+        StringBuilder str = new StringBuilder();
+        if (currentDirectory.getDepth() > 0) {
+            str.append("|");
+        }
+        for (int i = 0; i < currentDirectory.getDepth() * 4; i++) {
+            str.append(" ");
+        }
+        str.append("|---");
+        String str2 = str.toString();
+        for (int i = 0; i < currentDirectory.getChildren().size(); i++) {
+            str.append(currentDirectory.getChildren().get(i).getName());
+            System.out.println(str.toString());
+            if (currentDirectory.getChildren().get(i).isFolder() == true) {
+                tree(new String[] {currentDirectory.getChildren().get(i).getName()});
+            }
+            str = new StringBuilder(str2);
+        }
+        currentDirectory = temp;
     }
 
     /**
