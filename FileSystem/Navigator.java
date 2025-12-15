@@ -157,8 +157,18 @@ public class Navigator {
      * Displays the contents of the current directory as a tree, optionally
      * respecting flags or depth limits if provided by the arguments.
      */
+
+    private int amountOfSpaces(int num) {
+        if (num == -1) {
+            
+        } else {
+            
+        }
+    }
+
     private void tree(String[] args) {
         FolderNode temp = currentDirectory;
+        int amountOfSpaces = 0;
         if (args.length == 0) {
             args = new String[] {currentDirectory.getName()};
         } else {
@@ -168,10 +178,13 @@ public class Navigator {
             return;
         }
         StringBuilder str = new StringBuilder();
-        if (currentDirectory.getDepth() > 0) {
+        if (amountOfSpaces > 0) {
             str.append("|");
         }
-        for (int i = 0; i < currentDirectory.getDepth() * 4; i++) {
+        for (int i = 0; i < amountOfSpaces * 3; i++) {
+            str.append(" ");
+        }
+        if (amountOfSpaces > 1) {
             str.append(" ");
         }
         str.append("|---");
@@ -180,6 +193,7 @@ public class Navigator {
             str.append(currentDirectory.getChildren().get(i).getName());
             System.out.println(str.toString());
             if (currentDirectory.getChildren().get(i).isFolder() == true) {
+                amountOfSpaces++;
                 tree(new String[] {currentDirectory.getChildren().get(i).getName()});
             }
             str = new StringBuilder(str2);
