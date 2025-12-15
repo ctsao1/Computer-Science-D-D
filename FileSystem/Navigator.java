@@ -108,7 +108,11 @@ public class Navigator {
     private void ls(String[] args) {
         // TODO: print names of all child nodes of currentDirectory
         for (int i = 0; i < currentDirectory.getChildren().size(); i++) {
-            toStringWithoutEnd(currentDirectory.getChildren().get(i).toString());
+            if (currentDirectory.getChildren().get(i).isFolder() == true) {
+                System.out.println(currentDirectory.getChildren().get(i).toString().substring(1));
+            } else {
+                toStringWithoutEnd(currentDirectory.getChildren().get(i).toString().substring(1));
+            }
         }
     }
 
