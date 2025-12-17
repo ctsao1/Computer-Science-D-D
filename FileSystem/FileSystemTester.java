@@ -28,9 +28,20 @@ public class FileSystemTester {
         docs.addFile("readme.txt", 10);
         docs.addFolder("projects");
         FolderNode projects = (FolderNode) docs.getChildByName("projects");
-        projects.addFile("a.java", 10);
-        root.addFolder("bin");
-        root.addFile("notes.txt", 10);
+        projects.addFolder("projects2");
+        FolderNode projects2 = (FolderNode) docs.getChildByName("projects2");
+        projects2.addFolder("projects3");
+        FolderNode projects3 = (FolderNode) docs.getChildByName("projects3");
+        projects3.addFolder("projects4");
+        FolderNode projects4 = (FolderNode) docs.getChildByName("projects4");
+        projects4.addFolder("projects5");
+        FolderNode projects5 = (FolderNode) docs.getChildByName("projects5");
+        projects5.addFolder("projects6");
+        FolderNode projects6 = (FolderNode) docs.getChildByName("projects6");
+        // projects6.addFile("beans", 10);
+        // projects.addFile("a.java", 10);
+        // root.addFolder("bin");
+        // root.addFile("notes.txt", 10);
 
         Navigator nav = new Navigator(tree);
         // Navigator nav2 = new Navigator(tree2);
