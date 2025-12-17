@@ -209,7 +209,7 @@ public class Navigator {
     }
 
     private void tree(String[] args) {
-        treeHelper(args, 0);
+        treeHelper(new String[0], 0);
     }
 
     /**
