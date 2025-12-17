@@ -47,6 +47,14 @@ public class Navigator {
      *   - Other paths are interpreted relative to the current directory.
      */
 
+    private boolean checkArgs(String[] args, int amountOfParameters) {
+        if (args.length < amountOfParameters) {
+            System.out.println("Missing parameter(s)");
+            return true;
+        }
+        return false;
+    }
+
     private void toStringWithoutEnd(String str) {
         System.out.println(str.substring(0, str.length() - 1));
     }
@@ -72,7 +80,7 @@ public class Navigator {
 
     private void cd(String[] args) {
         // TODO: implement directory navigation
-        if (args.length == 0) {
+        if (checkArgs(args, 1)) {
             return;
         }
         args = splitSlashes(args[0]);
@@ -121,6 +129,9 @@ public class Navigator {
      */
     private void mkdir(String[] args) {
         // TODO: read folder name from args and delegate to currentDirectory.addFolder(...)
+        if (checkArgs(args, 1)) {
+            return;
+        }
         currentDirectory.addFolder(args[0]);
     }
 
@@ -129,6 +140,9 @@ public class Navigator {
      */
     private void touch(String[] args) {
         // TODO: read file name and size from args and delegate to currentDirectory.addFile(...)
+        if (checkArgs(args, 2)) {
+            return;
+        }
         currentDirectory.addFile(args[0], Integer.parseInt(args[1]));
     }
 
@@ -138,6 +152,9 @@ public class Navigator {
      */
     private void find(String[] args) {
         // TODO: use recursive search starting at currentDirectory
+        if (checkArgs(args, 1)) {
+            return;
+        }
         currentDirectory.containsNameRecursive(args[0]);
     }
 
@@ -158,17 +175,8 @@ public class Navigator {
      * respecting flags or depth limits if provided by the arguments.
      */
 
-    private int amountOfSpaces(int num) {
-        if (num == -1) {
-            
-        } else {
-            
-        }
-    }
-
-    private void tree(String[] args) {
-        FolderNode temp = currentDirectory;
-        int amountOfSpaces = 0;
+    private void treeHelper(String[] args, int spaces) {
+    FolderNode temp = currentDirectory;
         if (args.length == 0) {
             args = new String[] {currentDirectory.getName()};
         } else {
@@ -178,13 +186,13 @@ public class Navigator {
             return;
         }
         StringBuilder str = new StringBuilder();
-        if (amountOfSpaces > 0) {
+        if (spaces > 0) {
             str.append("|");
         }
-        for (int i = 0; i < amountOfSpaces * 3; i++) {
+        for (int i = 0; i < spaces * 3; i++) {
             str.append(" ");
         }
-        if (amountOfSpaces > 1) {
+        if (spaces > 1) {
             str.append(" ");
         }
         str.append("|---");
@@ -193,12 +201,15 @@ public class Navigator {
             str.append(currentDirectory.getChildren().get(i).getName());
             System.out.println(str.toString());
             if (currentDirectory.getChildren().get(i).isFolder() == true) {
-                amountOfSpaces++;
-                tree(new String[] {currentDirectory.getChildren().get(i).getName()});
+                treeHelper(new String[] {currentDirectory.getChildren().get(i).getName()}, spaces + 1);
             }
             str = new StringBuilder(str2);
         }
         currentDirectory = temp;
+    }
+
+    private void tree(String[] args) {
+        treeHelper(args, 0);
     }
 
     /**

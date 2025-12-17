@@ -20,31 +20,17 @@ public class FileSystemTester {
         // 1. Construct a tree and check root
         FileSystemTree tree = new FileSystemTree();
         FolderNode root = tree.getRoot();
-        FileSystemTree tree2 = new FileSystemTree();
 
         // 2. Build a small structure under root
         System.out.println("\n=== Building tree structure under root ===");
-        boolean addedDocs = root.addFolder("docs");
-        System.out.println(addedDocs);
-        boolean addedSrc = root.addFolder("src");
-        System.out.println(addedSrc);
-        boolean addedMainJava = root.addFile("main.java", 120);
-        System.out.println(addedMainJava);
-        boolean addedReadme = root.addFile("README.md", 80);
-        System.out.println(addedReadme);
-        FolderNode src = (FolderNode) root.getChildByName("src");
+        root.addFolder("docs");
         FolderNode docs = (FolderNode) root.getChildByName("docs");
-        src.addFile("balls", 100);
+        docs.addFile("readme.txt", 10);
         docs.addFolder("projects");
         FolderNode projects = (FolderNode) docs.getChildByName("projects");
-        projects.addFile("deez", 10);
-
-        tree2.getRoot().addFile("ballz", 10);
-        FileSystemNode ballz = tree2.getRoot().getChildren().get(0);
-        System.out.println(ballz.getDepth());
-        System.out.println();
-
-        System.out.println(root.containsNameRecursive("Balls"));
+        projects.addFile("a.java", 10);
+        root.addFile("bin", 10);
+        root.addFile("notes.txt", 10);
 
         Navigator nav = new Navigator(tree);
         // Navigator nav2 = new Navigator(tree2);
