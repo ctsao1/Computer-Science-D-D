@@ -182,9 +182,6 @@ public class Navigator {
         } else {
             currentDirectory = (FolderNode) currentDirectory.getChildByName(args[0]);
         }
-        if (currentDirectory.getHeight() == 0) {
-            return;
-        }
         StringBuilder str = new StringBuilder();
         if (spaces > 0) {
             str.append("|");

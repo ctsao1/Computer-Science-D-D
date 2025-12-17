@@ -29,7 +29,7 @@ public class FileSystemTester {
         docs.addFolder("projects");
         FolderNode projects = (FolderNode) docs.getChildByName("projects");
         projects.addFile("a.java", 10);
-        root.addFile("bin", 10);
+        root.addFolder("bin");
         root.addFile("notes.txt", 10);
 
         Navigator nav = new Navigator(tree);
