@@ -1,6 +1,6 @@
 public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
 
-    private int binarySearch(E[] arr, E key) {
+    private int binarySearch(Comparable<E> [] arr, E key) {
         int low = 0;
         int high = arr.length - 1;
 
@@ -32,7 +32,7 @@ public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
             return false;
         }
         if (size() == 0) {
-            add(obj);
+            super.add(obj);
         } else {
             int low = 0;
             int high = internalArray.length - 1;
@@ -41,7 +41,7 @@ public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
                 int mid = (low + high) / 2;
 
                 if (high == low) {
-                    add(high, obj);;
+                    super.add(high, obj);;
                     break;
                 }
 
