@@ -1,28 +1,16 @@
+import java.util.Arrays;
+
 public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
-
-    private int binarySearch(Comparable<E> [] arr, E key) {
-        int low = 0;
-        int high = arr.length - 1;
-
-        while (low <= high) {
-            int mid = (low + high) / 2;
-
-            if (arr[mid].compareTo(key) == 0) {
-                return mid;
-            }
-
-            if (arr[mid].compareTo(key) > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        return -1;
-    }
 
     @Override
     public boolean contains(E obj) {
-        return binarySearch(internalArray, obj) != -1;
+        if (super.internalArray.length == 0) {
+            return false;
+        }
+        if (Arrays.binarySearch(super.internalArray, obj) >= 0) {
+            return true;
+        }
+        return false;
     }
 
     // May not contain more than one of the same object
@@ -35,17 +23,17 @@ public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
             super.add(obj);
         } else {
             int low = 0;
-            int high = internalArray.length - 1;
+            int high = super.internalArray.length - 1;
 
             while (low <= high) {
                 int mid = (low + high) / 2;
 
                 if (high == low) {
-                    super.add(high, obj);;
+                    super.add(high, obj);
                     break;
                 }
 
-                if (internalArray[mid].compareTo(obj) > 0) {
+                if (super.internalArray[mid].compareTo(obj) > 0) {
                     low = mid + 1;
                 } else {
                     high = mid - 1;
@@ -61,11 +49,12 @@ public class SortedArrayList<E extends Comparable<E>> extends MyArrayList<E> {
     }
 
     public E min() {
-        return internalArray[0];
+        return super.internalArray[0];
     }
 
     public E max() {
-        return internalArray[internalArray.length - 1];
+        return super.internalArray[super.internalArray.length - 1];
     }
+
 
 }
