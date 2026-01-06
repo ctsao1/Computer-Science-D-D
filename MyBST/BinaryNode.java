@@ -14,6 +14,18 @@ public class BinaryNode<E extends Comparable<E>> {
 		this.parent = null;
 		this.height = 0;
 	}
+
+	public BinaryNode(E value, BinaryNode<E> parent) { 
+		this.value = value;
+		this.left = null;
+		this.right = null;
+		this.parent = parent;
+		if (parent == null) {
+			this.height = 0;
+		} else {
+			this.height = parent.getHeight() + 1;
+		}
+	}
 	
 	public E getValue() {
 		return value;
