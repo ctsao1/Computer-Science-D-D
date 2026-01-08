@@ -29,19 +29,21 @@ public class MyBST<E extends Comparable<E>> {
 			return false;
 		}
 		if (root == null) {
-			root.setValue(value);
+			root = new BinaryNode<E>(value);
 			return true;
 		}
 		BinaryNode<E> temp = root;
-		while ((value.compareTo(temp.getValue()) < 0 && temp.getLeft() == null) || value.compareTo(temp.getValue()) > 0 && temp.getRight() == null) {
+		boolean goLeft = false;
+		while ((value.compareTo(temp.getValue()) < 0 && temp.getLeft() != null) || value.compareTo(temp.getValue()) > 0 && temp.getRight() != null) {
 			if (value.compareTo(temp.getValue()) < 0) {
 				temp = temp.getLeft();
+				goLeft = true;
 			} else {
 				temp = temp.getRight();
 			}
 		}
-		
-		return false;
+		new BinaryNode<>(value, temp, goLeft);
+		return true;
 	}
 
 	// Removes value from this BST.  Returns true if value has been
@@ -49,23 +51,60 @@ public class MyBST<E extends Comparable<E>> {
 	// If removing a node with two children: replace it with the
 	//  largest node in the right subtree
 	public boolean remove(E value) {
+
 		return false;
 	}
 	
 	// Returns the minimum in the tree
 	public E min() {
-		return null;
+		BinaryNode<E> temp = getRoot();
+		temp = getLeftMost(temp);
+		return temp.getValue();
 	}
 	
 	// Returns the maximum in the tree.
 	public E max() {
-		return null;
+		BinaryNode<E> temp = getRoot();
+		while (temp.getRight() != null) {
+			temp = temp.getRight();
+		}
+		return temp.getValue();
+	}
+
+	public BinaryNode<E> getLeftMost(BinaryNode<E> node) {
+		while (node.getLeft() != null) {
+			node = node.getLeft();
+		}
+		return node;
 	}
 
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
 	// e.g. [Apple, Cranberry, Durian, Mango]
 	public String toString() {
-		return "";
+		if (root == null) {
+			return "[]";
+		}
+		StringBuilder str = new StringBuilder("[");
+		BinaryNode<E> temp = root;
+		temp = getLeftMost(temp);
+		str.append(temp.getValue() + ", ");
+
+		while (temp.getValue() != max()) {
+			temp = temp.getParent();
+			str.append(temp.getValue() + ", ");
+			if (temp.getRight() != null) {
+				temp = temp.getRight();
+				temp = getLeftMost(temp);
+				str.append(temp.getValue() + ", ");
+			}
+		}
+		if (root.getRight() != null) {
+			str.append(max());
+		} else {
+			str.delete(str.length() - 2, str.length());
+		}
+		str.append("]");
+		return str.toString();
 	}
 
 

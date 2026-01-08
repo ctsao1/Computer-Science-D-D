@@ -15,7 +15,7 @@ public class BinaryNode<E extends Comparable<E>> {
 		this.height = 0;
 	}
 
-	public BinaryNode(E value, BinaryNode<E> parent) { 
+	public BinaryNode(E value, BinaryNode<E> parent, boolean goLeft) { 
 		this.value = value;
 		this.left = null;
 		this.right = null;
@@ -24,6 +24,11 @@ public class BinaryNode<E extends Comparable<E>> {
 			this.height = 0;
 		} else {
 			this.height = parent.getHeight() + 1;
+		}
+		if (goLeft) {
+			parent.setLeft(this);
+		} else {
+			parent.setRight(this);
 		}
 	}
 	
@@ -83,7 +88,6 @@ public class BinaryNode<E extends Comparable<E>> {
 
 	public String toString() {
 		return value.toString();
-		
 	}
 	
 }
