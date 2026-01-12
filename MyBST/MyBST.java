@@ -78,32 +78,32 @@ public class MyBST<E extends Comparable<E>> {
 		return node;
 	}
 
+	private String list(BinaryNode<E> temp) {
+		StringBuilder str = new StringBuilder();
+		if (temp.getLeft() == null) {
+			str.append(temp.getValue());
+		} else {
+			str.append(list(temp.getLeft()));
+		}
+		
+		return list(temp.getLeft());
+	}
+
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
 	// e.g. [Apple, Cranberry, Durian, Mango]
 	public String toString() {
 		if (root == null) {
 			return "[]";
 		}
+		list(root);
+
+
+		BinaryNode<E> temp = getLeftMost(root);
+
 		StringBuilder str = new StringBuilder("[");
-		BinaryNode<E> temp = root;
 		temp = getLeftMost(temp);
 		str.append(temp.getValue() + ", ");
 
-		while (temp.getValue() != max()) {
-			temp = temp.getParent();
-			str.append(temp.getValue() + ", ");
-			if (temp.getRight() != null) {
-				temp = temp.getRight();
-				temp = getLeftMost(temp);
-				str.append(temp.getValue() + ", ");
-			}
-		}
-		if (root.getRight() != null) {
-			str.append(max());
-		} else {
-			str.delete(str.length() - 2, str.length());
-		}
-		str.append("]");
 		return str.toString();
 	}
 
