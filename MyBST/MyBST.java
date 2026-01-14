@@ -87,7 +87,11 @@ public class MyBST<E extends Comparable<E>> {
 		String spaces = ", ";
 		StringBuilder str = new StringBuilder();
 		if (temp.getLeft() == null) {
-			return temp.getValue().toString() + spaces;
+			str.append(temp.getValue() + spaces);
+			if (temp.getRight() != null) {
+				str.append(list(temp.getRight()));
+			}
+			return str.toString();
 		}
 
 		str.append(list(temp.getLeft()));
@@ -97,21 +101,6 @@ public class MyBST<E extends Comparable<E>> {
 		}
 
 		return str.toString();
-
-		// if (temp.getLeft() == null) {
-		// 	str.append(temp.getValue().toString() + spaces);
-		// 	if (temp.getRight() != null) {
-		// 		str.append(list(temp.getRight()) + spaces);
-		// 	}
-		// 	return str.toString();
-		// } else {
-		// 	str.append(list(temp.getLeft()) + spaces);
-		// }
-		// str.append(temp.getValue().toString() + spaces);
-		// if (temp.getRight() != null) {
-		// 	str.append(list(temp.getRight()) + spaces) ;
-		// }
-		// return str.toString() + spaces;
 	}
 
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
