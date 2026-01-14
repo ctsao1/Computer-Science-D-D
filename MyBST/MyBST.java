@@ -42,6 +42,11 @@ public class MyBST<E extends Comparable<E>> {
 				temp = temp.getRight();
 			}
 		}
+		if (value.compareTo(temp.getValue()) < 0) {
+			goLeft = true;
+		} else {
+			goLeft = false;
+		}
 		new BinaryNode<>(value, temp, goLeft);
 		return true;
 	}
@@ -79,14 +84,34 @@ public class MyBST<E extends Comparable<E>> {
 	}
 
 	private String list(BinaryNode<E> temp) {
+		String spaces = ", ";
 		StringBuilder str = new StringBuilder();
 		if (temp.getLeft() == null) {
-			str.append(temp.getValue());
-		} else {
-			str.append(list(temp.getLeft()));
+			return temp.getValue().toString() + spaces;
 		}
-		
-		return list(temp.getLeft());
+
+		str.append(list(temp.getLeft()));
+		str.append(temp.getValue().toString() + spaces);
+		if (temp.getRight() != null) {
+			str.append(list(temp.getRight()));
+		}
+
+		return str.toString();
+
+		// if (temp.getLeft() == null) {
+		// 	str.append(temp.getValue().toString() + spaces);
+		// 	if (temp.getRight() != null) {
+		// 		str.append(list(temp.getRight()) + spaces);
+		// 	}
+		// 	return str.toString();
+		// } else {
+		// 	str.append(list(temp.getLeft()) + spaces);
+		// }
+		// str.append(temp.getValue().toString() + spaces);
+		// if (temp.getRight() != null) {
+		// 	str.append(list(temp.getRight()) + spaces) ;
+		// }
+		// return str.toString() + spaces;
 	}
 
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
@@ -95,14 +120,12 @@ public class MyBST<E extends Comparable<E>> {
 		if (root == null) {
 			return "[]";
 		}
-		list(root);
 
+		StringBuilder str = new StringBuilder();
 
-		BinaryNode<E> temp = getLeftMost(root);
-
-		StringBuilder str = new StringBuilder("[");
-		temp = getLeftMost(temp);
-		str.append(temp.getValue() + ", ");
+		str.append("[" + list(root));
+		str.delete(str.length() - 2, str.length() + 1);
+		str.append("]");
 
 		return str.toString();
 	}

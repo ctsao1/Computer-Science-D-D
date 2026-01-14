@@ -5,7 +5,9 @@ public class MyBSTTester {
         bst.add(1);
         // System.out.println(bst.toString());
         bst.add(2);
+        bst.add(0);
         bst.add(3);
+        System.out.println(bst.min());
         System.out.println(bst.max());
         System.out.println(bst.toString());
     }
