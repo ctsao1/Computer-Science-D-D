@@ -1,17 +1,20 @@
 public class MyBSTTester {
     public static void main(String[] args) {
-        MyBST<Integer> bst = new MyBST<Integer>();
+        MyBST<String> bst = new MyBST<String>();
         // System.out.println(bst.toString());
-        bst.add(3);
+        bst.add("d");
         // System.out.println(bst.toString());
-        bst.add(1);
-        bst.add(5);
-        bst.add(2);
-        bst.add(4);
-        bst.add(10);
-        bst.add(0);
+        bst.add("b");
+        bst.add("f");
+        bst.add("c");
+        bst.add("e");
+        bst.add("g");
+        bst.add("a");
+        System.out.println(bst.toString());
+        System.out.println(bst.remove("g"));
         System.out.println(bst.min());
         System.out.println(bst.max());
         System.out.println(bst.toString());
+        System.out.println(bst.contains("z"));
     }
 }

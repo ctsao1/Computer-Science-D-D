@@ -30,7 +30,7 @@ public class MyBST<E extends Comparable<E>> {
 				node = node.getRight();
 			}
 		}
-		if (root.getValue().equals(value)) {
+		if (node.getValue().equals(value)) {
 			return true;
 		}
 		return false;
@@ -70,8 +70,38 @@ public class MyBST<E extends Comparable<E>> {
 	// If removing a node with two children: replace it with the
 	//  largest node in the right subtree
 	public boolean remove(E value) {
-
-		return false;
+		if (contains(value) == false) {
+			return false;
+		}
+		BinaryNode<E> node = root;
+		while ((value.compareTo(node.getValue()) < 0 && node.hasLeft() == true) || (value.compareTo(node.getValue()) > 0 && node.hasRight() == true)) {
+			if (value.compareTo(node.getValue()) < 0) {
+				node = node.getLeft();
+			} else {
+				node = node.getRight();
+			}
+		}
+		if (node.isLeaf() == true) {
+			if (node.getParent().hasRight() == true && node.getParent().getRight().getValue().equals(value)) {
+				node.getParent().setRight(null);
+				return true;
+			}
+			node.getParent().setLeft(null);
+			return true;
+		} if (node.hasRight() == false) {
+			node.getParent().setLeft(node.getLeft());
+			return true;
+		}
+		BinaryNode<E> temp = node.getRight();
+		while (node.hasLeft() == true) {
+			temp = temp.getLeft();
+		}
+		node.setValue(temp.getValue());
+		temp.getParent().setLeft(null);
+		if (temp.hasRight() == true) {
+			temp.getParent().setLeft(temp.getRight());
+		}
+		return true;
 	}
 	
 	// Returns the minimum in the tree
