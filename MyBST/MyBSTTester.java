@@ -4,16 +4,16 @@ public class MyBSTTester {
         // System.out.println(bst.toString());
         bst.add("d");
         // System.out.println(bst.toString());
-        bst.add("b");
-        bst.add("f");
-        bst.add("c");
-        bst.add("e");
-        bst.add("g");
-        bst.add("a");
+        // bst.add("b");
+        // bst.add("f");
+        // bst.add("c");
+        // bst.add("e");
+        // bst.add("g");
+        // bst.add("a");
         System.out.println(bst.toString());
         System.out.println(bst.remove("d"));
-        System.out.println(bst.min());
-        System.out.println(bst.max());
+        // System.out.println(bst.min());
+        // System.out.println(bst.max());
         System.out.println(bst.toString());
         System.out.println(bst.getRoot());
     }

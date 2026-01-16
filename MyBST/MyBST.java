@@ -82,6 +82,10 @@ public class MyBST<E extends Comparable<E>> {
 			}
 		}
 		if (node.isLeaf() == true) {
+			if (root.getValue().equals(value)) {
+				root = null;
+				return true;
+			}
 			if (node.getParent().hasRight() && node.getParent().getRight().equals(node)) {
 				node.getParent().setRight(null);
 				return true;
@@ -98,7 +102,7 @@ public class MyBST<E extends Comparable<E>> {
 			temp = temp.getLeft();
 		}
 		BinaryNode<E> tempKids = temp;
-		while (temp.hasRight()) {
+		while (tempKids.hasRight()) {
 			tempKids = tempKids.getRight();
 		}
 		node.setValue(temp.getValue());
@@ -116,6 +120,9 @@ public class MyBST<E extends Comparable<E>> {
 	
 	// Returns the minimum in the tree
 	public E min() {
+		if (root == null) {
+			throw new IllegalArgumentException();
+		}
 		BinaryNode<E> temp = getRoot();
 		while (temp.hasLeft() == true) {
 			temp = temp.getLeft();
@@ -125,6 +132,9 @@ public class MyBST<E extends Comparable<E>> {
 	
 	// Returns the maximum in the tree.
 	public E max() {
+		if (root == null) {
+			throw new IllegalArgumentException();
+		}
 		BinaryNode<E> temp = getRoot();
 		while (temp.hasRight() == true) {
 			temp = temp.getRight();
