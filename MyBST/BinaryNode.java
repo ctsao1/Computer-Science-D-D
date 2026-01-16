@@ -49,7 +49,10 @@ public class BinaryNode<E extends Comparable<E>> {
 	}
 
 	public int getHeight() {
-		return height;
+		if (this.getParent() == null) {
+			return 0;
+		}
+		return this.getParent().getHeight() + 1;
 	}
 	
 	public void setValue(E value) {

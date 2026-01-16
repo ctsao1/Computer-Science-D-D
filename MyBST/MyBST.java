@@ -107,12 +107,20 @@ public class MyBST<E extends Comparable<E>> {
 		}
 		node.setValue(temp.getValue());
 		temp.getParent().setLeft(null);
+		if (temp.equals(tempKids) && node.getRight().equals(temp)) {
+			node.setRight(tempKids.getRight());
+			tempKids.setParent(node.getParent());
+		}
 		if (temp.hasRight()) {
 			if (temp.getParent().equals(node) == false) {
 				temp.getParent().setLeft(temp.getRight());
 			} else {
-				tempKids.setRight(node.getRight());
-				node.getRight().setParent(tempKids);
+				if (node.hasLeft() && node.getLeft().equals(temp)) {
+					tempKids.setRight(node.getRight());
+					node.getRight().setParent(tempKids);
+				} else {
+					node.setRight(tempKids);
+				}
 			}
 		}
 		return true;

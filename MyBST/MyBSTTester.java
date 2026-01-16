@@ -1,20 +1,21 @@
 public class MyBSTTester {
     public static void main(String[] args) {
-        MyBST<String> bst = new MyBST<String>();
+        MyBST<Integer> bst = new MyBST<Integer>();
         // System.out.println(bst.toString());
-        bst.add("d");
-        // System.out.println(bst.toString());
-        // bst.add("b");
-        // bst.add("f");
-        // bst.add("c");
-        // bst.add("e");
-        // bst.add("g");
-        // bst.add("a");
+        bst.add(1);
+        for (int i = 2; i <= 10; i++) {
+            bst.add(i);
+        }
+        BinaryNode<Integer> node = bst.getRoot();
+        while (node.hasRight()) {
+            node = node.getRight();
+        }
         System.out.println(bst.toString());
-        System.out.println(bst.remove("d"));
-        // System.out.println(bst.min());
-        // System.out.println(bst.max());
+        System.out.println(bst.min());
+        System.out.println(bst.max());
+        System.out.println(bst.remove(9));
         System.out.println(bst.toString());
-        System.out.println(bst.getRoot());
+        System.out.println(node.getHeight());
+
     }
 }
