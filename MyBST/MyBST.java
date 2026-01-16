@@ -68,7 +68,7 @@ public class MyBST<E extends Comparable<E>> {
 	// Removes value from this BST.  Returns true if value has been
 	// found and removed; otherwise returns false.
 	// If removing a node with two children: replace it with the
-	//  largest node in the right subtree
+	//  smallest node in the right subtree
 	public boolean remove(E value) {
 		if (contains(value) == false) {
 			return false;
@@ -82,24 +82,34 @@ public class MyBST<E extends Comparable<E>> {
 			}
 		}
 		if (node.isLeaf() == true) {
-			if (node.getParent().hasRight() == true && node.getParent().getRight().getValue().equals(value)) {
+			if (node.getParent().hasRight() && node.getParent().getRight().equals(node)) {
 				node.getParent().setRight(null);
 				return true;
 			}
 			node.getParent().setLeft(null);
 			return true;
-		} if (node.hasRight() == false) {
+		} 
+		if (node.hasRight() == false) {
 			node.getParent().setLeft(node.getLeft());
 			return true;
 		}
 		BinaryNode<E> temp = node.getRight();
-		while (node.hasLeft() == true) {
+		while (temp.hasLeft() == true) {
 			temp = temp.getLeft();
+		}
+		BinaryNode<E> tempKids = temp;
+		while (temp.hasRight()) {
+			tempKids = tempKids.getRight();
 		}
 		node.setValue(temp.getValue());
 		temp.getParent().setLeft(null);
-		if (temp.hasRight() == true) {
-			temp.getParent().setLeft(temp.getRight());
+		if (temp.hasRight()) {
+			if (temp.getParent().equals(node) == false) {
+				temp.getParent().setLeft(temp.getRight());
+			} else {
+				tempKids.setRight(node.getRight());
+				node.getRight().setParent(tempKids);
+			}
 		}
 		return true;
 	}

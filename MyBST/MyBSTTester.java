@@ -11,10 +11,10 @@ public class MyBSTTester {
         bst.add("g");
         bst.add("a");
         System.out.println(bst.toString());
-        System.out.println(bst.remove("g"));
+        System.out.println(bst.remove("d"));
         System.out.println(bst.min());
         System.out.println(bst.max());
         System.out.println(bst.toString());
-        System.out.println(bst.contains("z"));
+        System.out.println(bst.getRoot());
     }
 }
