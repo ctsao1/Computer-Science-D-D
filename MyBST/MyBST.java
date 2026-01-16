@@ -19,6 +19,9 @@ public class MyBST<E extends Comparable<E>> {
 
 	// Returns true if this BST contains value; otherwise returns false.
 	public boolean contains(E value) {
+		if (root == null) {
+			return false;
+		}
 		BinaryNode<E> node = root;
 		while ((value.compareTo(node.getValue()) < 0 && node.hasLeft() == true) || (value.compareTo(node.getValue()) > 0 && node.hasRight() == true)) {
 			if (value.compareTo(node.getValue()) < 0) {
