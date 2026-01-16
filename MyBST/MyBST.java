@@ -19,18 +19,16 @@ public class MyBST<E extends Comparable<E>> {
 
 	// Returns true if this BST contains value; otherwise returns false.
 	public boolean contains(E value) {
+		BinaryNode<E> node = root;
+		while ((value.compareTo(node.getValue()) < 0 && node.hasLeft() == true) || (value.compareTo(node.getValue()) > 0 && node.hasRight() == true)) {
+			if (value.compareTo(node.getValue()) < 0) {
+				node = node.getLeft();
+			} else {
+				node = node.getRight();
+			}
+		}
 		if (root.getValue().equals(value)) {
 			return true;
-		}
-		BinaryNode<E> node = root;
-		E after;
-		if (node.getValue().compareTo(value) < 0) {
-			after = node.getLeft().getValue();
-		} else {
-			after = node.getRight().getValue();
-		}
-		while ((node.getValue().equals(value) == false && after.equals(value) == false) || ) {
-			
 		}
 		return false;
 	}
@@ -38,16 +36,16 @@ public class MyBST<E extends Comparable<E>> {
 	// Adds value to this BST, unless this tree already holds value.
 	// Returns true if value has been added; otherwise returns false.
 	public boolean add(E value) {
-		if (contains(value)) {
-			return false;
-		}
 		if (root == null) {
 			root = new BinaryNode<E>(value);
 			return true;
 		}
+		if (contains(value)) {
+			return false;
+		}
 		BinaryNode<E> temp = root;
 		boolean goLeft = false;
-		while ((value.compareTo(temp.getValue()) < 0 && temp.getLeft() != null) || value.compareTo(temp.getValue()) > 0 && temp.getRight() != null) {
+		while ((value.compareTo(temp.getValue()) < 0 && temp.hasLeft() == true) || value.compareTo(temp.getValue()) > 0 && temp.hasRight() == true) {
 			if (value.compareTo(temp.getValue()) < 0) {
 				temp = temp.getLeft();
 				goLeft = true;
@@ -76,32 +74,27 @@ public class MyBST<E extends Comparable<E>> {
 	// Returns the minimum in the tree
 	public E min() {
 		BinaryNode<E> temp = getRoot();
-		temp = getLeftMost(temp);
+		while (temp.hasLeft() == true) {
+			temp = temp.getLeft();
+		}
 		return temp.getValue();
 	}
 	
 	// Returns the maximum in the tree.
 	public E max() {
 		BinaryNode<E> temp = getRoot();
-		while (temp.getRight() != null) {
+		while (temp.hasRight() == true) {
 			temp = temp.getRight();
 		}
 		return temp.getValue();
 	}
 
-	public BinaryNode<E> getLeftMost(BinaryNode<E> node) {
-		while (node.getLeft() != null) {
-			node = node.getLeft();
-		}
-		return node;
-	}
-
 	private String list(BinaryNode<E> temp) {
 		String spaces = ", ";
 		StringBuilder str = new StringBuilder();
-		if (temp.getLeft() == null) {
+		if (temp.hasLeft() == false) {
 			str.append(temp.getValue() + spaces);
-			if (temp.getRight() != null) {
+			if (temp.hasRight() == true) {
 				str.append(list(temp.getRight()));
 			}
 			return str.toString();
@@ -109,7 +102,7 @@ public class MyBST<E extends Comparable<E>> {
 
 		str.append(list(temp.getLeft()));
 		str.append(temp.getValue().toString() + spaces);
-		if (temp.getRight() != null) {
+		if (temp.hasRight() == true) {
 			str.append(list(temp.getRight()));
 		}
 
