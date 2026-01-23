@@ -20,7 +20,10 @@ public class Arithmetic {
 			return operand1 * operand2;
 		}
 		if (operation.equals("^")) {
-			return operand1^operand2;
+			return operand1 ^ operand2;
+		}
+		if (operation.equals("%")) {
+			return operand1 % operand2;
 		}
 		else {
 			return operand1 / operand2;
@@ -33,7 +36,34 @@ public class Arithmetic {
 	}
 	
 	public static String convertClassicToStout(String exp) {
-		return "";
+		String opValues = "4-4+5%5/5*6^";
+		MyStack<String> ops = new MyStack<String>();
+		StringBuilder str = new StringBuilder();
+		String[] expr = exp.split(" ");
+		for (int i = 0; i < expr.length; i++) {
+			if (expr[i].charAt(0) <= 57 && expr[i].charAt(0) >= 48) {
+				str.append(expr[i] + " ");
+			} 
+			else {
+				if (!ops.empty()) {
+					if (opValues.charAt(opValues.indexOf(ops.peek()) - 1) > opValues.charAt(opValues.indexOf(expr[i]) - 1)) {
+					str.append(ops.peek() + " ");
+					ops.pop();
+					ops.push(expr[i]);
+					} else {
+					ops.push(expr[i]);
+					}
+				} else {
+					ops.push(expr[i]);
+				}
+			}
+		}
+		while (!ops.empty()) {
+			str.append(ops.peek() + " ");
+			ops.pop();
+		}
+
+		return str.toString();
 	}
 	
 	
