@@ -19,12 +19,13 @@ public class MyStack<E> {
         return true;
     }
 
-    public boolean pop() {
+    public E pop() {
         if (top == null) {
             throw new EmptyStackException();
         }
+        E temp = top.getValue();
         top = top.getNext();
-        return true;
+        return temp;
     }
 
     public E peek() {
