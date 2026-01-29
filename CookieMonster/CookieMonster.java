@@ -46,8 +46,10 @@ public class CookieMonster {
 
     //You may find it VERY helpful to write this helper method.  Or not!
 	private boolean validPoint(int row, int col) {
-		//Write this if you want
-		return false;
+		if (row > numRows || col > numCols || col < 0 || row < 0 || cookieGrid[row][col] == -1) {
+			return false;
+		}
+		return true;
 	}
 	
 	/* RECURSIVELY calculates the route which grants the most cookies.
@@ -58,8 +60,14 @@ public class CookieMonster {
 	
 	// Returns the maximum number of cookies edible starting from (and including) cookieGrid[row][col]
 	public int recursiveCookies(int row, int col) {
-		//CODE THIS
-		return 0;
+		int cookieCount = 0;
+		cookieCount = cookieCount + cookieGrid[row][col];
+		if (!validPoint(row + 1, col) && !validPoint(row, col + 1)) {
+			return cookieCount;
+		}
+		recursiveCookies(row, col + 1);
+		recursiveCookies(row + 1, col);
+		return cookieCount;
 	}
 	
 
