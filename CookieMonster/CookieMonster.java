@@ -48,7 +48,7 @@ public class CookieMonster {
 
 	// You may find it VERY helpful to write this helper method. Or not!
 	private boolean validPoint(int row, int col) {
-		if (row >= numRows - 1 || col >= numCols - 1 || col < 0 || row < 0
+		if (row > numRows - 1 || col > numCols - 1 || col < 0 || row < 0
 				|| cookieGrid[row][col] == -1) {
 			return false;
 		}
