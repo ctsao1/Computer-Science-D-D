@@ -64,7 +64,6 @@ public class CookieMonster {
 	
 	// Returns the maximum number of cookies edible starting from (and including) cookieGrid[row][col]
 	public int recursiveCookies(int row, int col) {
-		int cookies = cookieGrid[row][col];
 		if (!validPoint(row, col)) {
 			return 0;
 		}
