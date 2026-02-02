@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.lang.Math;
 
 // You are allowed (and expected!) to use either Java's ArrayDeque or LinkedList class to make stacks and queues
 
@@ -46,7 +47,7 @@ public class CookieMonster {
 
     //You may find it VERY helpful to write this helper method.  Or not!
 	private boolean validPoint(int row, int col) {
-		if (row > numRows || col > numCols || col < 0 || row < 0 || cookieGrid[row][col] == -1) {
+		if (row >= numRows - 1 || col >= numCols - 1 || col < 0 || row < 0 || cookieGrid[row][col] == -1) {
 			return false;
 		}
 		return true;
@@ -60,14 +61,14 @@ public class CookieMonster {
 	
 	// Returns the maximum number of cookies edible starting from (and including) cookieGrid[row][col]
 	public int recursiveCookies(int row, int col) {
-		int cookieCount = 0;
-		cookieCount = cookieCount + cookieGrid[row][col];
-		if (!validPoint(row + 1, col) && !validPoint(row, col + 1)) {
-			return cookieCount;
+		int cookies = cookieGrid[row][col];
+		if (!validPoint(row, col)) {
+			return 0;
 		}
-		recursiveCookies(row, col + 1);
-		recursiveCookies(row + 1, col);
-		return cookieCount;
+		int right = recursiveCookies(row, col + 1);
+		int down  = recursiveCookies(row + 1, col);
+
+		return cookieGrid[row][col] + Math.max(right, down);
 	}
 	
 
