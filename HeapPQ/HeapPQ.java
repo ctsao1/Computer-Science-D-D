@@ -4,20 +4,14 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 	private E[] heap;
 	private int objectCount;
 
-	public HeapPQ()
-	{
+	public HeapPQ() {
 		this.heap = (E[])new Comparable[3];
 		this.objectCount = 0;
 	}
 
 	//Returns the number of elements in the priority queue
 	public int size() {
-		for (int i = 0; i < heap.length; i++) {
-			if (heap[i] == null) {
-				return i;
-			}
-		}
-		return heap.length;
+		return objectCount;
 	}
 
 	//DO NOT CHANGE MY JANKY TOSTRING!!!!!
@@ -60,7 +54,7 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 		for (int i = 0; i < objectCount; i++) {
 			temp[i] = heap[i];
 		}
-		objectCount = objectCount * 2;
+		heap = temp;
 	}
 
 	//Returns the index of the "parent" of index i
@@ -70,7 +64,11 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	//Returns the index of the *smaller child* of index i
 	private int smallerChild(int i) {
-		return 0;
+		i = i++ * 2;
+		if (heap[i].compareTo(heap[i + 1]) < 0) {
+			return i;
+		}
+		return i + 1;
 	}
 
 	//Swaps the contents of indices i and j
@@ -82,22 +80,35 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i upwards until the heap properties hold again.
 	private void bubbleUp(int i) {
-
+		while (heap[i].compareTo(heap[parent(i)]) < 0) {
+			swap(i, parent(i));
+		}
 	}
 
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
-
+		while (heap[i].compareTo(heap[smallerChild(i)]) > 0) {
+			swap(i, smallerChild(i));
+		}
 	}
 
 	@Override
 	public void add(E obj) {
-		throw new UnsupportedOperationException("Unimplemented method 'add'");
+		if (size() == heap.length) {
+			increaseCapacity();
+		}
+		heap[objectCount] = obj;
+		bubbleUp(objectCount);
+		objectCount++;
 	}
 
 	@Override
 	public E removeMin() {
-		throw new UnsupportedOperationException("Unimplemented method 'removeMin'");
+		E temp = heap[0];
+		swap(0, objectCount - 1);
+		heap[objectCount - 1] = null;
+		bubbleDown(0);
+		return temp;
 	}
 
 	@Override
