@@ -80,14 +80,14 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i upwards until the heap properties hold again.
 	private void bubbleUp(int i) {
-		while (heap[i].compareTo(heap[parent(i)]) < 0) {
+		while (heap[parent(i)] != null && heap[i].compareTo(heap[parent(i)]) < 0) {
 			swap(i, parent(i));
 		}
 	}
 
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
-		while (heap[i].compareTo(heap[smallerChild(i)]) > 0) {
+		while (heap[smallerChild(i)] != null && heap[i].compareTo(heap[smallerChild(i)]) > 0) {
 			swap(i, smallerChild(i));
 		}
 	}
