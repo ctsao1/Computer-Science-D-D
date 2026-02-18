@@ -64,7 +64,7 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	//Returns the index of the *smaller child* of index i
 	private int smallerChild(int i) {
-		i = i++ * 2;
+		i = (i * 2) + 1;
 		if (heap[i].compareTo(heap[i + 1]) < 0) {
 			return i;
 		}
@@ -88,9 +88,10 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
-		while (heap[smallerChild(i)] != null && heap[i].compareTo(heap[smallerChild(i)]) > 0) {
-			swap(i, smallerChild(i));
-			i = smallerChild(i);
+		int smallerChild = smallerChild(i);
+		while (heap[smallerChild] != null && heap[i].compareTo(heap[smallerChild]) > 0) {
+			swap(i, smallerChild);
+			i = smallerChild;
 		}
 	}
 
@@ -108,7 +109,7 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 	public E removeMin() {
 		E temp = heap[0];
 		swap(0, objectCount - 1);
-		heap[objectCount - 1] = null;
+		objectCount--;
 		bubbleDown(0);
 		return temp;
 	}
