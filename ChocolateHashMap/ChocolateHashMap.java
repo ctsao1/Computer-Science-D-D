@@ -50,28 +50,39 @@ public class ChocolateHashMap<K, V> {
     // Use .hashCode(), but be aware that hashCode can return negative numbers!
     // NOTE: Math.abs(Integer.MIN_VALUE) is still negative. Consider masking the sign bit.
     private int whichBucket(K key) {
+        return Math.abs(key.hashCode() % buckets.length);
         // TODO: implement
-        throw new UnsupportedOperationException("TODO: implement whichBucket");
     }
 
     // Returns the current load factor (objCount / buckets)
     public double currentLoadFactor() {
+        return objectCount / buckets.length;
         // TODO: implement
-        throw new UnsupportedOperationException("TODO: implement currentLoadFactor");
     }
 
     // Return true if the key exists as a key in the map, otherwise false.
     // Use the .equals method to check equality.
     public boolean containsKey(K key) {
+        int index = whichBucket(key);
+        while (!buckets[index].getNext().isSentinel()) {
+            if (buckets[index].getEntry().getKey().equals(key)) {
+                return true;
+            }
+        }
+        return false;
         // TODO: implement
-        throw new UnsupportedOperationException("TODO: implement containsKey");
     }
 
     // Return true if the value exists as a value in the map, otherwise false.
     // Use the .equals method to check equality.
     public boolean containsValue(V value) {
+        for (int i = 0; i < buckets.length; i++) {
+            if (buckets[i].getEntry().getValue().equals(value)) {
+                return true;
+            }
+        }
+        return false;
         // TODO: implement
-        throw new UnsupportedOperationException("TODO: implement containsValue");
     }
 
     // Puts a key-value pair into the map.
@@ -81,8 +92,16 @@ public class ChocolateHashMap<K, V> {
     // After adding the pair, check if the load factor is greater than the limit.
     // - If so, you must call rehash with double the current bucket size.
     public boolean put(K key, V value) {
+        if (containsKey(key)) {
+            return false;
+        }
+        int index = whichBucket(key);
+        buckets[index].insertBefore(new BatchNode<ChocolateEntry<K,V>>(new ChocolateEntry<K,V>(key, value)));
+        if (currentLoadFactor() > loadFactorLimit) {
+            
+        }
+        return true;
         // TODO: implement
-        throw new UnsupportedOperationException("TODO: implement put");
     }
 
     // Returns the value associated with the key in the map.
