@@ -19,10 +19,16 @@ public class ChocolateHashMapTester {
       // Try to add them
       System.out.println("Adding 5 batches:");
       System.out.println("put(" + k1 + "): " + inventory.put(k1, b1));
+      System.out.println("1");
       System.out.println("put(" + k2 + "): " + inventory.put(k2, b2));
+      System.out.println("4");
       System.out.println("put(" + k3 + "): " + inventory.put(k3, b3));
+      System.out.println("1");
       System.out.println("put(" + k4 + "): " + inventory.put(k4, b4));
+      System.out.println("1");
       System.out.println("put(" + k5 + "): " + inventory.put(k5, b5));
+      System.out.println("1");
+      System.out.println(inventory.toString());
 
       System.out.println();
 
@@ -34,6 +40,7 @@ public class ChocolateHashMapTester {
       System.out.println("containsValue: " + inventory.containsValue(b1));
       System.out.println("get: " + inventory.get(k5));
       System.out.println("remove: " + inventory.remove(k2));
+      inventory.rehash(inventory.getBuckets().length);
       System.out.println("toString: " + inventory.toString());
 
     }

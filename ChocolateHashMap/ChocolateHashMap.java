@@ -56,7 +56,7 @@ public class ChocolateHashMap<K, V> {
 
     // Returns the current load factor (objCount / buckets)
     public double currentLoadFactor() {
-        return objectCount / buckets.length;
+        return (double) objectCount / (double) buckets.length;
         // TODO: implement
     }
 
@@ -81,15 +81,16 @@ public class ChocolateHashMap<K, V> {
         for (int i = 0; i < buckets.length; i++) {
             BatchNode<ChocolateEntry<K,V>> temp = buckets[i].getNext();
             while (!temp.isSentinel()) {
-                if (temp.getEntry().getValue() == null) {
+                while (temp.getEntry().getValue() == null) {
                     if (value == null) {
                         return true;
                     }
-                    i++;
+                    temp = temp.getNext();
                 }
                 if (temp.getEntry().getValue().equals(value)) {
                     return true;
                 }
+                temp = temp.getNext();
             }
         }
         return false;
@@ -107,7 +108,8 @@ public class ChocolateHashMap<K, V> {
             return false;
         }
         int index = whichBucket(key);
-        buckets[index].insertBefore(new BatchNode<ChocolateEntry<K,V>>(new ChocolateEntry<K,V>(key, value)));
+        ChocolateEntry<K,V> entry = new ChocolateEntry<K,V>(key, value);
+        buckets[index].insertBefore(new BatchNode<ChocolateEntry<K,V>>(entry));
         objectCount++;
         if (currentLoadFactor() > loadFactorLimit) {
             rehash(buckets.length * 2);
@@ -127,6 +129,7 @@ public class ChocolateHashMap<K, V> {
             if (temp.getEntry().getKey().equals(key)) {
                 return temp.getEntry().getValue();
             }
+            temp = temp.getNext();
         }
         return null;
         // TODO: implement
@@ -142,10 +145,11 @@ public class ChocolateHashMap<K, V> {
         while (!temp.isSentinel()) {
             if (temp.getEntry().getKey().equals(key)) {
                 temp.unlink();
-                objectCount--;
                 break;
             }
+            temp = temp.getNext();
         }
+        objectCount--;
         return true;
     }
 
@@ -156,17 +160,15 @@ public class ChocolateHashMap<K, V> {
     // followed by Z, then K.
     @SuppressWarnings("unchecked")
     public void rehash(int newBucketCount) {
-        BatchNode<ChocolateEntry<K, V>>[] temp = (BatchNode<ChocolateEntry<K, V>>[]) new BatchNode[newBucketCount];
-        fillArrayWithSentinels(temp);
+        ChocolateHashMap<K, V> newMap = new ChocolateHashMap<>(newBucketCount, loadFactorLimit);
         for (int i = 0; i < buckets.length; i++) {
-            if (!buckets[i].getNext().isSentinel()) {
-                BatchNode<ChocolateEntry<K, V>> entry = buckets[i].getNext();
-                while (!entry.isSentinel()) {
-                    temp[i].insertBefore(entry);
-                    entry = entry.getNext();
-                }
+            BatchNode<ChocolateEntry<K, V>> temp = buckets[i].getNext();
+            while (!temp.isSentinel()) {
+                newMap.put(temp.getEntry().getKey(), temp.getEntry().getValue());
+                temp = temp.getNext();
             }
         }
+        buckets = newMap.buckets;
         // TODO: implement
     }
 
@@ -181,15 +183,17 @@ public class ChocolateHashMap<K, V> {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        str.append("[" + objectCount + ", " + buckets.length + " | ");
+        str.append("[ " + objectCount + ", " + buckets.length + " | ");
         for (int i = 0; i < buckets.length; i++) {
-            str.append("{ b" + (i + 1) + ": ");
             BatchNode<ChocolateEntry<K, V>> entry = buckets[i].getNext();
-            while (!entry.isSentinel()) {
-                str.append(entry.toString() + " ");
-                entry = entry.getNext();
+            if (!entry.isSentinel()) {
+                str.append("{ b" + i + ": ");
+                while (!entry.isSentinel()) {
+                    str.append(entry.getEntry().toString() + " ");
+                    entry = entry.getNext();
+                }
+                str.append("} ");
             }
-            str.append("}");
         }
         str.append("]");
         return str.toString();
