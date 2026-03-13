@@ -36,9 +36,7 @@ public class MiniGPT {
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
-        return map;
 	}
-
 	
 	public void generateText(String outputFileName, int numChars) {
 		
