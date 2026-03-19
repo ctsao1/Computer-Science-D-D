@@ -24,13 +24,13 @@ public class MiniGPT {
                 // Cast the integer value to a character
                 Character character = (char) charAsInt;
 				str.append(character);
-				if (str.length() == chainOrder) {
-					if (map.containsKey(str.toString())) {
-						map.get(str.toString()).add(character);
+				if (str.length() == chainOrder + 1) {
+					if (map.containsKey(str.toString().substring(0, str.length() - 1))) {
+						map.get(str.toString().substring(0, str.length() - 1)).add(character);
 					} else {
 						ArrayList<Character> list = new ArrayList<>();
 						list.add(character);
-						map.put(str.toString(), list);
+						map.put(str.toString().substring(0, str.length() - 1), list);
 					}
 					str.deleteCharAt(0);
 				}
@@ -43,15 +43,16 @@ public class MiniGPT {
 	public void generateText(String outputFileName, int numChars) {
 		try (BufferedWriter reader = new BufferedWriter(new FileWriter(outputFileName))) {
 			String start = map.keySet().toArray()[(int) (Math.random() * map.keySet().toArray().length)].toString();
-            for (int i = 0; i < numChars; i++) {
-				StringBuilder key = new StringBuilder();
-				key.append(start);
-				Character c = map.get(key.toString()).get((int) (Math.random() * (map.get(key.toString()).size() - 1)));
-				reader.write(start);
+			StringBuilder key = new StringBuilder();
+			key.append(start);
+			reader.write(key.toString());
+			int i = 0;
+            while (i < numChars) {
+				Character c = map.get(key.toString()).get((int) (Math.random() * (map.get(key.toString()).size())));
 				reader.write(c);
 				key.deleteCharAt(0);
 				key.append(c);
-				start = key.toString();
+				i++;
 			}
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
