@@ -33,8 +33,14 @@ public class RLECompression {
             // TO-DO
             // Now here: do things with the char you just read, dependent on the char you
             // just read
+            if (c == previousChar) {
+                count++;
+            } else {
+                pw.append(previousChar + previousChar + count + "");
+                previousChar = c;
+                count = 1;
+            }
         }
-
         br.close();
         pw.close();
     }
@@ -51,8 +57,15 @@ public class RLECompression {
             // TO-DO
             // Now here: do things with the char you just read, dependent on the char you
             // just read
+            if (c == previousChar) {
+                int count = (char) br.read() - 0;
+                for (int i = 0; i < count; i++) {
+                    pw.append(c);
+                }
+            } else {
+                pw.append(previousChar);
+            }
         }
-
         br.close();
         pw.close();
     }
