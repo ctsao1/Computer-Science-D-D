@@ -27,6 +27,7 @@ public class RLECompression {
 
         char previousChar = (char) br.read();
         int count = 1;
+        pw.write(previousChar);
 
         while (br.ready()) {
             char c = (char) br.read();
@@ -36,7 +37,12 @@ public class RLECompression {
             if (c == previousChar) {
                 count++;
             } else {
-                pw.write(previousChar + previousChar + count + "");
+                String charCount = count + "";
+                if (count > 1) {
+                    pw.write("" + previousChar + previousChar + charCount);    
+                } else {
+                    pw.write(previousChar);
+                }
                 previousChar = c;
                 count = 1;
             }
