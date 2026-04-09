@@ -23,27 +23,28 @@ public class MyPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 			if (i < objectCount - 1)
 				stringbuf.append(", ");
 		}
-		stringbuf.append("]\nor alternatively,\n");
+		// stringbuf.append("]\nor alternatively,\n");
 
-		for(int rowLength = 1, j = 0; j < objectCount; rowLength *= 2)
-		{
-			for (int i = 0; i < rowLength && j < objectCount; i++, j++)
-			{
-				stringbuf.append(heap[j] + " ");
-			}
-			stringbuf.append("\n");
-			if (j < objectCount)
-			{
-				for (int i = 0; i < Math.min(objectCount - j, rowLength*2); i++)
-				{
-					if (i%2 == 0)
-						stringbuf.append("/");
-					else
-						stringbuf.append("\\ ");
-				}
-				stringbuf.append("\n");
-			}
-		}
+		// for(int rowLength = 1, j = 0; j < objectCount; rowLength *= 2)
+		// {
+		// 	for (int i = 0; i < rowLength && j < objectCount; i++, j++)
+		// 	{
+		// 		stringbuf.append(heap[j] + " ");
+		// 	}
+		// 	stringbuf.append("\n");
+		// 	if (j < objectCount)
+		// 	{
+		// 		for (int i = 0; i < Math.min(objectCount - j, rowLength*2); i++)
+		// 		{
+		// 			if (i%2 == 0)
+		// 				stringbuf.append("/");
+		// 			else
+		// 				stringbuf.append("\\ ");
+		// 		}
+		// 		stringbuf.append("\n");
+		// 	}
+		// }
+		stringbuf.append("]");
 		return stringbuf.toString();
 	}
 
@@ -85,21 +86,19 @@ public class MyPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i upwards until the heap properties hold again.
 	private void bubbleUp(int i) {
-		while (heap[parent(i)] != null && i > 0 && heap[i].compareTo(heap[parent(i)]) < 0) {
+		while (i > 0 && heap[parent(i)] != null && heap[i].compareTo(heap[parent(i)]) < 0) {
 			swap(i, parent(i));
 			i = parent(i);
-		}
-		if (i != 0 && heap[i - 1].compareTo(heap[i]) < 0) {
-			swap(i - 1, i);
 		}
 	}
 
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
 		int smallerChild = smallerChild(i);
-		while (heap[smallerChild] != null && heap[i].compareTo(heap[smallerChild]) > 0) {
+		while (smallerChild < objectCount && heap[i].compareTo(heap[smallerChild]) > 0) {
 			swap(i, smallerChild);
 			i = smallerChild;
+			smallerChild = smallerChild(i);
 		}
 		if (i != objectCount - 1 && heap[i].compareTo(heap[i + 1]) > 0) {
 			swap(i, i + 1);
