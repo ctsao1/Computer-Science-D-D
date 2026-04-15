@@ -47,7 +47,7 @@ public class RLECompression {
             if (!br.ready()) {
                 if (previousChar == c) {
                     pw.write("" + previousChar + previousChar);
-                    pw.write(count);
+                    pw.write("" + count);
                 } else {
                     pw.write(c);
                 }
@@ -130,10 +130,21 @@ public class RLECompression {
         }
         // TO-DO
         // Now undo the Burrows-Wheeler transform
-
+        StringBuilder[] reconstruction = reconstructions.clone();
+        for (int i = 0; i < originalText.length() - 1; i++) {
+            Arrays.sort(reconstruction);
+            for (int j = 0; j < reconstruction.length; j++) {
+                StringBuilder str = new StringBuilder();
+                str.append(reconstructions[j]);
+                str.append(reconstruction[j]);
+                reconstruction[j] = str;
+            }
+        }
         // TO-DO
         // And write the appropriate reconstruction into the file, without the null char
-        PrintWriter pw = new PrintWriter(fileName.substring(0, fileName.length() - 3));
+        PrintWriter pw = new PrintWriter(fileName.substring(0, fileName.length() - 2));
+        Arrays.sort(reconstruction);
+        pw.write(reconstruction[0].substring(1));
         pw.close();
     }
 }

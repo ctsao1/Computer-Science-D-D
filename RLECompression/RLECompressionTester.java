@@ -7,9 +7,8 @@ import java.util.Arrays;
 public class RLECompressionTester {
     public static void main(String[] args) {
         try {
-            // RLECompression.encode("test.txt");
-            // RLECompression.decode("test.txt.rle");
-            RLECompression.bwTransform("test.txt");
+            // RLECompression.compress("test.txt");
+            RLECompression.decompress("test.txt.bw.rle");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
