@@ -101,9 +101,15 @@ public class RLECompression {
         rotations[0] = originalText.toString();
         // TO-DO
         // Now do the Burrows-Wheeler Transform
-
+        for (int i = 1; i < rotations.length; i++) {
+            rotations[i] = originalText.substring(originalText.length() - i) + originalText.substring(0, originalText.length() - i);
+        }
+        Arrays.sort(rotations);
         // And then write the transformation into a file
         PrintWriter pw = new PrintWriter(fileName + ".bw");
+        for (int i = 0; i < rotations.length; i++) {
+            pw.write(rotations[i].substring(originalText.length() - 1));
+        }
         pw.close();
     }
 

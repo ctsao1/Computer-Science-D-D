@@ -8,8 +8,8 @@ public class RLECompressionTester {
     public static void main(String[] args) {
         try {
             // RLECompression.encode("test.txt");
-            RLECompression.decode("test.txt.rle");
             // RLECompression.decode("test.txt.rle");
+            RLECompression.bwTransform("test.txt");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
