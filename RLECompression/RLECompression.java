@@ -27,7 +27,6 @@ public class RLECompression {
 
         char previousChar = (char) br.read();
         int count = 1;
-        pw.write(previousChar);
 
         while (br.ready()) {
             char c = (char) br.read();
@@ -37,15 +36,23 @@ public class RLECompression {
             if (c == previousChar) {
                 count++;
             } else {
-                String charCount = count + "";
                 if (count > 1) {
-                    pw.write("" + previousChar + previousChar + charCount);    
+                    pw.write("" + previousChar + previousChar);
+                    pw.write("" + count);
                 } else {
                     pw.write(previousChar);
                 }
-                previousChar = c;
                 count = 1;
             }
+            if (!br.ready()) {
+                if (previousChar == c) {
+                    pw.write("" + previousChar + previousChar);
+                    pw.write(count);
+                } else {
+                    pw.write(c);
+                }
+            }
+            previousChar = c;
         }
         br.close();
         pw.close();
@@ -54,22 +61,23 @@ public class RLECompression {
     // Decodes the above scheme
     public static void decode(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
-        PrintWriter pw = new PrintWriter(fileName.substring(0, fileName.length() - 4));
+        PrintWriter pw = new PrintWriter(fileName.substring(0, fileName.length() - 3));
 
         char previousChar = (char) br.read();
+        pw.write(previousChar);
 
         while (br.ready()) {
             char c = (char) br.read();
             // TO-DO
             // Now here: do things with the char you just read, dependent on the char you
             // just read
-            if (c == previousChar) {
-                int count = (char) br.read() - 0;
-                for (int i = 0; i < count; i++) {
-                    pw.write(c);
+            if (c - '0' <= 9) {
+                for (int i = 0; i < c - '0' - 2; i++) {
+                    pw.write(previousChar);
                 }
             } else {
-                pw.write(previousChar);
+                previousChar = c;
+                pw.write(c);
             }
         }
         br.close();
