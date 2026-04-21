@@ -30,6 +30,8 @@ public class Huffman {
         }
     }
 
+    public 
+
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
