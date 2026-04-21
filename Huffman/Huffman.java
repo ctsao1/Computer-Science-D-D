@@ -33,7 +33,7 @@ public class Huffman {
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < map.size(); i++) {
-            str.append(map.values().toArray()[i] + "\n");
+            str.append("Character: " + map.keySet().toArray()[i] + " | Frequency: " + map.values().toArray()[i] + "\n");
         }
         return str.toString();
     }
