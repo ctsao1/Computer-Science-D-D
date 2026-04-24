@@ -9,10 +9,13 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.PriorityQueue;
 
-public class Huffman {
+public class Huffman{
 
     private HashMap<Character, Integer> map;
+    private PriorityQueue<Node<Character>> heap;
 
     public Huffman(String fileName) {
         map = new HashMap<>();
@@ -28,9 +31,13 @@ public class Huffman {
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
+
     }
 
-    public 
+    private String dictionary() {
+
+        return "";
+    }
 
     public String toString() {
         StringBuilder str = new StringBuilder();
