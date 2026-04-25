@@ -1,15 +1,15 @@
 
-public class Node<E extends Comparable<E>> {
+public class Node implements Comparable {
 
 	private int frequency;
-	private E value;
-	private Node<E> left;
-	private Node<E> right;
-	private Node<E> parent;
+	private char value;
+	private Node left;
+	private Node right;
+	private Node parent;
 	private int height;
 	
-	public Node(E value, int frequency) {
-		this.frequency = frequency;
+	public Node(char value) {
+		this.frequency = 1;
 		this.value = value;
 		this.left = null;
 		this.right = null;
@@ -17,8 +17,8 @@ public class Node<E extends Comparable<E>> {
 		this.height = 0;
 	}
 
-	public Node(E value, int frequency, Node<E> parent, boolean goLeft) { 
-		this.frequency = frequency;
+	public Node(char value, Node parent, boolean goLeft) { 
+		this.frequency = 1;
 		this.value = value;
 		this.left = null;
 		this.right = null;
@@ -34,24 +34,24 @@ public class Node<E extends Comparable<E>> {
 			parent.setRight(this);
 		}
 	}
-	
+
 	public int getFrequency() {
 		return frequency;
 	}
 
-	public E getValue() {
+	public char getValue() {
 		return value;
 	}
 
-	public Node<E> getLeft() {
+	public Node getLeft() {
 		return left;
 	}
 
-	public Node<E> getRight() {
+	public Node getRight() {
 		return right;
 	}
 
-	public Node<E> getParent() {
+	public Node getParent() {
 		return parent;
 	}
 
@@ -67,21 +67,25 @@ public class Node<E extends Comparable<E>> {
 		this.frequency = frequency;
 	}
 
-	public void setValue(E value) {
+	public void plusFrequency() {
+		this.frequency++;
+	}
+
+	public void setValue(char value) {
 		this.value = value;
 	}
 
-	public void setLeft(Node<E> left) {
+	public void setLeft(Node left) {
 		this.left = left;
 		//YOU CODE: Update height
 	}
 
-	public void setRight(Node<E> right) {
+	public void setRight(Node right) {
 		this.right = right;
 		//YOU CODE: Update height
 	}
 
-	public void setParent(Node<E> parent) {
+	public void setParent(Node parent) {
 		this.parent = parent;
 	}
 	
@@ -102,7 +106,26 @@ public class Node<E extends Comparable<E>> {
 	}
 
 	public String toString() {
-		return "Value: " + value.toString() + " | Frequency: " + frequency;
+		return "Value: " + value + " | Frequency: " + frequency;
+	}
+
+	// public int compareTo(Node other) {
+	// 	if (this.getFrequency() < other.getFrequency()) {
+	// 		return -1;
+	// 	} if (this.getFrequency() > other.getFrequency()) {
+	// 		return 1;
+	// 	}
+	// 	return 0;
+	// }
+
+	@Override
+	public int compareTo(Object o) {
+		if (this.getFrequency() < ((Node) o).getFrequency()) {
+			return -1;
+		} if (this.getFrequency() > ((Node) o).getFrequency()) {
+			return 1;
+		}
+		return 0;
 	}
 	
 }

@@ -16,6 +16,7 @@ public class Huffman{
 
     private HashMap<Character, Integer> map;
     private PriorityQueue<Node<Character>> heap;
+    private ArrayList<String> dictionary;
 
     public Huffman(String fileName) {
         map = new HashMap<>();
@@ -31,11 +32,15 @@ public class Huffman{
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
+        for (int i = 0; i < map.values().toArray().length; i++) {
+            Node<Character> n = new Node<Character>((char) map.keySet().toArray()[i]);
+            n.setFrequency((int) map.values().toArray()[i]);
+            heap.add(n);
+        }
 
     }
 
-    private String dictionary() {
-
+    public String dictionary() {
         return "";
     }
 
