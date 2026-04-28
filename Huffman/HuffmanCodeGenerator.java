@@ -12,6 +12,7 @@ public class HuffmanCodeGenerator {
     private PriorityQueue<Node> heap;
     private BST tree;
     private HashMap<Character, String> dictionary;
+    private String[] dictionary2 = new String[256];
 
     public HuffmanCodeGenerator(String frequencyFile) {
         map = new HashMap<>();
@@ -67,6 +68,16 @@ public class HuffmanCodeGenerator {
             addToDictionary(n.getRight(), str.toString());
         }
         dictionary.put(n.getValue(), str.toString());
+    }
+
+    public void moveToArray() {
+        for (int i = 0; i < dictionary2.length; i++) {
+            if (dictionary.containsKey((char) i)) {
+                dictionary2[i] = dictionary.get((char) i );
+            } else {
+                dictionary2[i] = "\n";
+            }
+        }
     }
 
     public int getFrequency(char c) {
