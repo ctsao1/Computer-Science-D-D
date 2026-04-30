@@ -18,11 +18,13 @@ public class BST {
 		Node parent = new Node('\0');
         if (n1.compareTo(n2) < 0) {
             parent.setLeft(n1);
-            parent.setParent(n2);
+            parent.setRight(n2);
         } else {
             parent.setLeft(n2);
-            parent.setParent(n1);
+            parent.setRight(n1);
         }
+        n1.setParent(parent);
+        n2.setParent(parent);
         parent.setFrequency(n1.getFrequency() + n2.getFrequency());
 		return parent;
 	}
