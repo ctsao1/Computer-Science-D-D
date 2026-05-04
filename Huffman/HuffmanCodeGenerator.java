@@ -14,6 +14,27 @@ public class HuffmanCodeGenerator {
     private String[] dictionary2 = new String[128];
 
     public HuffmanCodeGenerator(String frequencyFile) {
+        makeMap(frequencyFile);
+        makeHeap();
+        makeTree();
+        makeDictionary();
+        moveToArray();
+    }
+
+    public void makeCodeFile(String codeFile) {
+        try {
+            PrintWriter pw = new PrintWriter(codeFile);
+            for (int i = 0; i < dictionary2.length - 1; i++) {
+                pw.println(dictionary2[i]);
+            }
+            pw.print(dictionary2[127]);
+            pw.close();
+        } catch (Exception e) {
+            System.err.println("Something went wrong bozo: " + e.getMessage());
+        }
+    }
+
+    public void makeMap(String frequencyFile) {
         map = new HashMap<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(frequencyFile))) {
             while (reader.ready()) {
@@ -28,22 +49,6 @@ public class HuffmanCodeGenerator {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
         map.put((char) 26, 1);
-        makeHeap();
-        makeTree();
-        makeDictionary();
-        moveToArray();
-    }
-
-    public void makeCodeFile(String codeFile) {
-        try {
-            PrintWriter pw = new PrintWriter(codeFile);
-            for (int i = 0; i < dictionary2.length; i++) {
-                pw.append(dictionary2[i]);
-            }
-            pw.close();
-        } catch (Exception e) {
-            System.err.println("Something went wrong bozo: " + e.getMessage());
-        }
     }
 
     public void makeHeap() {
@@ -68,6 +73,7 @@ public class HuffmanCodeGenerator {
     public void makeDictionary() {
         dictionary = new HashMap<Character, String>();
         addToDictionary(tree.getRoot(), "");
+        dictionary.remove(tree.getRoot().getValue());
     }
 
     public void addToDictionary(Node n, String binary) {
@@ -90,12 +96,12 @@ public class HuffmanCodeGenerator {
     }
 
     public void moveToArray() {
-        for (int i = 1; i < dictionary2.length; i++) {
+        for (int i = 0; i < dictionary2.length; i++) {
             dictionary2[i] = "" + ((char) i);
             if (dictionary.containsKey((char) i)) {
                 dictionary2[i] = dictionary2[i] + " " + dictionary.get((char) i );
             } else {
-                dictionary2[i] = "\n";
+                dictionary2[i] = "";
             }
         }
     }

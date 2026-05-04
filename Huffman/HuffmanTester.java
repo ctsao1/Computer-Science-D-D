@@ -17,10 +17,6 @@ public class HuffmanTester {
         //     System.out.println(huffer.getDictionary().keySet().toArray()[i] + " | " + huffer.getDictionary().values().toArray()[i]);
         // }
 
-        for (int i = 0; i < huffer.getDictionary2().length; i++) {
-            System.out.println(huffer.getDictionary2()[i]);
-        }
-
         huffer.makeCodeFile("YIPPEE.txt");
     }
 }
