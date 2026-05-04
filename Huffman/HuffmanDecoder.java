@@ -14,11 +14,12 @@ public class HuffmanDecoder {
 
     public void makeMap(String codeFile) {
         map = new HashMap<>();
+        int count = 0;
 		try (BufferedReader reader = new BufferedReader(new FileReader(codeFile))) {
             while (reader.ready()) {
-                String[] str = reader.readLine().split(" ");
-                Character c = str[0].charAt(0);
-                map.put(str[1], c);
+                String str = reader.readLine();
+                map.put(str, (char) count);
+                count++;
             }
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
@@ -34,6 +35,9 @@ public class HuffmanDecoder {
     }
 
     public boolean isEOF(String binary) {
+        if (map.get(binary) == null) {
+            return false;
+        }
         return map.get(binary).equals((char) 26);
     }
 

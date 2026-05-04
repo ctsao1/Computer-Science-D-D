@@ -14,11 +14,14 @@ public class HuffmanEncoder {
 
     public void makeMap(String codeFile) {
         map = new HashMap<>();
+        int count = 0;
 		try (BufferedReader reader = new BufferedReader(new FileReader(codeFile))) {
             while (reader.ready()) {
-                String[] str = reader.readLine().split(" ");
-                Character c = str[0].charAt(0);
-                map.put(c, str[1]);
+                String str = reader.readLine();
+                if (!str.equals("")) {
+                    map.put((char) count, str);
+                }
+                count++;
             }
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
@@ -38,12 +41,15 @@ public class HuffmanEncoder {
             PrintWriter pw = new PrintWriter(encodedFile);
             int count = 0;
             while (reader.ready()) {
-                count++;
                 Character c = (char) reader.read();
-                pw.print(map.get(c));
+                if (map.get(c) != null) {
+                    pw.print(map.get(c));
+                    count = count + map.get(c).length();
+                }
             }
             pw.print(map.get((char) 26));
-            for (int i = 0; i < count % 8; i++) {
+            count = count + map.get((char) 26).length();
+            for (int i = 0; i < 8 - (count % 8); i++) {
                 pw.print(0);
             }
             reader.close();

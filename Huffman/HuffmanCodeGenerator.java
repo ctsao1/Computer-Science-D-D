@@ -27,7 +27,7 @@ public class HuffmanCodeGenerator {
             for (int i = 0; i < dictionary2.length - 1; i++) {
                 pw.println(dictionary2[i]);
             }
-            pw.print("");
+            pw.println("");
             pw.close();
         } catch (Exception e) {
             System.err.println("Something went wrong bozo: " + e.getMessage());
@@ -134,7 +134,7 @@ public class HuffmanCodeGenerator {
     }
 
     public String getCode(char c) {
-        return "" + map.get(c);
+        return "" + dictionary.get(c);
     }
 
 }
