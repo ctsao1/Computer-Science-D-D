@@ -59,4 +59,56 @@ public class HuffmanEncoder {
         }
     }
 
+    public void encodeLong(String fileToCompress, String encodedFile) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileToCompress));
+            PrintWriter pw = new PrintWriter(encodedFile);
+            int count = 0;
+            while (reader.ready()) {
+                Character c = (char) reader.read();
+                if (map.get(c) != null) {
+                    pw.print(map.get(c));
+                    count = count + map.get(c).length();
+                }
+            }
+            pw.print(map.get((char) 26));
+            count = count + map.get((char) 26).length();
+            for (int i = 0; i < 8 - (count % 8); i++) {
+                pw.print(0);
+            }
+            reader.close();
+            pw.close();
+        } catch (Exception e) {
+            System.err.println("Something went wrong bozo: " + e.getMessage());
+        }
+    }
+
+    public void encodeFile(String fileToCompress) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileToCompress));
+            PrintWriter pw = new PrintWriter(fileToCompress + ".huf");
+            StringBuilder str = new StringBuilder();
+            while (reader.ready()) {
+                Character c = (char) reader.read();
+                str.append(encodeChar(c));
+                if (!reader.ready()) {
+                    str.append(map.get((char) 26));
+                }
+                if (str.length() >= 8) {
+                    pw.print((char) Integer.parseInt(str.substring(0, 8), 2));
+                    str.delete(0, 8);
+                }
+            }
+            if (str.length() != 0) {
+                for (int i = 0; i < 8 - (str.length() % 8); i++) {
+                    str.append("0");
+                }
+            }
+            pw.print((char) Integer.parseInt(str.toString(), 2));
+            reader.close();
+            pw.close();
+        } catch (Exception e) {
+            System.err.println("Something went wrong bozo: " + e.getMessage());
+        }
+    }
 }

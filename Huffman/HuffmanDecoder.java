@@ -46,12 +46,44 @@ public class HuffmanDecoder {
             BufferedReader reader = new BufferedReader(new FileReader(encodedFile));
             PrintWriter pw = new PrintWriter(decodedFile);
             StringBuilder str = new StringBuilder();
-            while (!isEOF(str.toString())) {
+            while (reader.ready()) {
                 Character c = (char) reader.read();
                 str.append(c);
                 if (isCode(str.toString())) {
-                    pw.print(str.toString());
+                    if (isEOF(str.toString())) {
+                        break;
+                    }
+                    pw.print(decodeChar(str.toString()));
                     str = new StringBuilder();
+                }
+            }
+            reader.close();
+            pw.close();
+        } catch (Exception e) {
+            System.err.println("Something went wrong bozo: " + e.getMessage());
+        }
+    }
+
+    public void decodeFile(String encodedFile) {
+        if (!encodedFile.substring(encodedFile.length() - 4).equals(".huf")) {
+            throw new IllegalArgumentException("Not a huf file");
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(encodedFile));
+            PrintWriter pw = new PrintWriter(encodedFile.substring(0, encodedFile.length() - 4));
+            StringBuilder str = new StringBuilder();
+            while (reader.ready()) {
+                Character c = (char) reader.read();
+                String binary = Integer.toBinaryString((int) c);
+                for (int i = 0; i < binary.length(); i++) {
+                    str.append(binary.charAt(i));
+                    if (isCode(str.toString())) {
+                        if (isEOF(str.toString())) {
+                        break;
+                        }
+                        pw.print(decodeChar(str.toString()));
+                        str = new StringBuilder();
+                    }
                 }
             }
             reader.close();

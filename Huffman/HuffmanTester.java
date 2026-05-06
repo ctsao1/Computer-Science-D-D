@@ -18,8 +18,10 @@ public class HuffmanTester {
         // for (int i = 0; i < huffer.getDictionary().keySet().toArray().length; i++) {
         //     System.out.println(huffer.getDictionary().keySet().toArray()[i] + " | " + huffer.getDictionary().values().toArray()[i]);
         // }
-        hufferEncoder.encodeFileToHuffmanCodes("test.txt", "YIPPEEencoded.txt");
+        hufferEncoder.encodeLong("test.txt", "YIPPEEencoded.txt");
         huffmanDecoder.decodeFileFromHuffmanCodes("YIPPEEencoded.txt", "YIPPEEdecoded.txt");
+        hufferEncoder.encodeFile("test.txt");
+        huffmanDecoder.decodeFile("test.txt.huf");
 
     }
 }
