@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class HuffmanDecoder {
 
@@ -70,16 +71,19 @@ public class HuffmanDecoder {
         }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(encodedFile));
-            PrintWriter pw = new PrintWriter(encodedFile.substring(0, encodedFile.length() - 4));
+            PrintWriter pw = new PrintWriter(encodedFile.substring(0, encodedFile.length() - 3));
             StringBuilder str = new StringBuilder();
             while (reader.ready()) {
                 Character c = (char) reader.read();
                 String binary = Integer.toBinaryString((int) c);
+                if (binary.length() < 8) {
+                    binary = "0" + binary;
+                }
                 for (int i = 0; i < binary.length(); i++) {
                     str.append(binary.charAt(i));
                     if (isCode(str.toString())) {
                         if (isEOF(str.toString())) {
-                        break;
+                            break;
                         }
                         pw.print(decodeChar(str.toString()));
                         str = new StringBuilder();
@@ -89,7 +93,7 @@ public class HuffmanDecoder {
             reader.close();
             pw.close();
         } catch (Exception e) {
-            System.err.println("Something went wrong bozo: " + e.getMessage());
+            System.err.println("Something went wrong bozo in decode: " + e.getMessage());
         }
     }
 

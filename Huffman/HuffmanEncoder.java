@@ -104,11 +104,13 @@ public class HuffmanEncoder {
                     str.append("0");
                 }
             }
-            pw.print((char) Integer.parseInt(str.toString(), 2));
+            if (str.length() == 8) {
+                pw.print((char) Integer.parseInt(str.toString(), 2));
+            }
             reader.close();
             pw.close();
         } catch (Exception e) {
-            System.err.println("Something went wrong bozo: " + e.getMessage());
+            System.err.println("Something went wrong bozo in encode: " + e.getMessage());
         }
     }
 }

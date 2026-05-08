@@ -30,7 +30,7 @@ public class HuffmanCodeGenerator {
             pw.println("");
             pw.close();
         } catch (Exception e) {
-            System.err.println("Something went wrong bozo: " + e.getMessage());
+            System.err.println("Something went wrong bozo in generator: " + e.getMessage());
         }
     }
 
@@ -105,6 +105,8 @@ public class HuffmanCodeGenerator {
             }
         }
     }
+
+    // getters
 
     public int getFrequency(char c) {
         if (!map.containsKey(c)) {

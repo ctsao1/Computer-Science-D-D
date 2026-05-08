@@ -1,25 +1,10 @@
 public class HuffmanTester {
     public static void main(String[] args) {
         HuffmanCodeGenerator huffer = new HuffmanCodeGenerator("test.txt");
+        huffer.makeCodeFile("YIPPEE.txt");
         HuffmanEncoder hufferEncoder = new HuffmanEncoder("YIPPEE.txt");
         HuffmanDecoder huffmanDecoder = new HuffmanDecoder("YIPPEE.txt");
-        // for (int i = 0; i < huffer.getMap().keySet().toArray().length; i++) {
-        //     System.out.println(huffer.getMap().keySet().toArray()[i] + " | " + huffer.getMap().values().toArray()[i]);
-        // }
         
-        // System.out.println();
-
-        // for (int i = 0; i < huffer.getHeap().toArray().length; i++) {
-        //     System.out.println(huffer.getHeap().toArray()[i]);
-        // }
-
-        // System.out.println();
-
-        // for (int i = 0; i < huffer.getDictionary().keySet().toArray().length; i++) {
-        //     System.out.println(huffer.getDictionary().keySet().toArray()[i] + " | " + huffer.getDictionary().values().toArray()[i]);
-        // }
-        hufferEncoder.encodeLong("test.txt", "YIPPEEencoded.txt");
-        huffmanDecoder.decodeFileFromHuffmanCodes("YIPPEEencoded.txt", "YIPPEEdecoded.txt");
         hufferEncoder.encodeFile("test.txt");
         huffmanDecoder.decodeFile("test.txt.huf");
 
