@@ -1,8 +1,6 @@
 
 public class DynamicProgramming {
 
-
-	
     // Every day for the rest of the year, you're going to be given a choice between two jobs to do: 
     // one that is LOW stress, and one that is HIGH stress.  Each job pays out a dollar amount; 
     // *usually* the high stress jobs pay more.  However, after doing a high stress job, you need to 
@@ -13,7 +11,19 @@ public class DynamicProgramming {
     
     // You can assume lowPayouts.length == highPayouts.length
     public static int hiLoStress(int[] lowPayouts, int[] highPayouts) {
+        return hiLoStress(lowPayouts, highPayouts);
+    }
 
+    private int hiLoStressHelper(int[] lowPayouts, int[] highPayouts) {
+        int money = 0;
+        if (lowPayouts.length <= 1) {
+            if (lowPayouts[0] > highPayouts[0]) {
+                return lowPayouts[0];
+            } else {
+                return highPayouts[0];
+            }
+        }
+        return money + hiLoStressHelper(lowPayouts, highPayouts);
     }
     
     
