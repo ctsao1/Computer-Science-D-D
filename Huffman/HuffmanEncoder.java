@@ -99,10 +99,8 @@ public class HuffmanEncoder {
                     str.delete(0, 8);
                 }
             }
-            if (str.length() != 0) {
-                for (int i = 0; i < 8 - (str.length() % 8); i++) {
-                    str.append("0");
-                }
+            while (str.length() < 8) {
+                str.append("0");
             }
             if (str.length() == 8) {
                 pw.print((char) Integer.parseInt(str.toString(), 2));

@@ -71,12 +71,12 @@ public class HuffmanDecoder {
         }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(encodedFile));
-            PrintWriter pw = new PrintWriter(encodedFile.substring(0, encodedFile.length() - 3));
+            PrintWriter pw = new PrintWriter(encodedFile.substring(0, encodedFile.length() - 4));
             StringBuilder str = new StringBuilder();
             while (reader.ready()) {
                 Character c = (char) reader.read();
                 String binary = Integer.toBinaryString((int) c);
-                if (binary.length() < 8) {
+                while (binary.length() < 8) {
                     binary = "0" + binary;
                 }
                 for (int i = 0; i < binary.length(); i++) {
