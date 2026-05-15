@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Arrays;
 
 public class DynamicProgramming {
 
@@ -11,19 +13,22 @@ public class DynamicProgramming {
     
     // You can assume lowPayouts.length == highPayouts.length
     public static int hiLoStress(int[] lowPayouts, int[] highPayouts) {
-        return hiLoStress(lowPayouts, highPayouts);
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(lowPayouts.length - 1, Math.max(lowPayouts[lowPayouts.length - 1], highPayouts[highPayouts.length - 1]));
+        return hiLoStressHelper(lowPayouts, highPayouts, 0, map);
     }
 
-    private int hiLoStressHelper(int[] lowPayouts, int[] highPayouts) {
-        int money = 0;
-        if (lowPayouts.length <= 1) {
-            if (lowPayouts[0] > highPayouts[0]) {
-                return lowPayouts[0];
-            } else {
-                return highPayouts[0];
-            }
+    private static int hiLoStressHelper(int[] lowPayouts, int[] highPayouts, int day, HashMap<Integer, Integer> map) {
+        if (map.containsKey(day)) {
+            return lowPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
         }
-        return money + hiLoStressHelper(lowPayouts, highPayouts);
+        if (lowPayouts.length - 2 == day) {
+            return hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
+        }
+        if (Math.max(lowPayouts[day], highPayouts[day]) == highPayouts[day]) {
+            return highPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 2, map);
+        }
+        return map.get(day);
     }
     
     
