@@ -27,7 +27,7 @@ public class DynamicProgramming {
         int hi = highPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 2, map);
         int lo = lowPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
         map.put(day, Math.max(hi, lo));
-        return Math.max(hi, lo);
+        return map.get(day);
     }
     
     
