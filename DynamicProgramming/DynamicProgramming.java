@@ -3,6 +3,8 @@ import java.util.Arrays;
 
 public class DynamicProgramming {
 
+    private static HashMap<Integer, Integer> hiLoMap;
+
     // Every day for the rest of the year, you're going to be given a choice between two jobs to do: 
     // one that is LOW stress, and one that is HIGH stress.  Each job pays out a dollar amount; 
     // *usually* the high stress jobs pay more.  However, after doing a high stress job, you need to 
@@ -13,22 +15,22 @@ public class DynamicProgramming {
     
     // You can assume lowPayouts.length == highPayouts.length
     public static int hiLoStress(int[] lowPayouts, int[] highPayouts) {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        map.put(lowPayouts.length - 1, Math.max(lowPayouts[lowPayouts.length - 1], highPayouts[highPayouts.length - 1]));
-        return hiLoStressHelper(lowPayouts, highPayouts, 0, map);
+        DynamicProgramming.hiLoMap = new HashMap<Integer, Integer>();
+        return hiLoStressHelper(lowPayouts, highPayouts, 0, hiLoMap);
     }
 
     private static int hiLoStressHelper(int[] lowPayouts, int[] highPayouts, int day, HashMap<Integer, Integer> map) {
         if (map.containsKey(day)) {
-            return lowPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
+            return Math.max(lowPayouts[day], highPayouts[day] + map.get(day));
         }
         if (lowPayouts.length - 2 == day) {
             return hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
         }
+
         if (Math.max(lowPayouts[day], highPayouts[day]) == highPayouts[day]) {
             return highPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 2, map);
         }
-        return map.get(day);
+        return lowPayouts[day] + hiLoStressHelper(lowPayouts, highPayouts, day + 1, map);
     }
     
     
