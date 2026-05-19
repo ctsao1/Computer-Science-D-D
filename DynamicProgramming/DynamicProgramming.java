@@ -62,7 +62,8 @@ public class DynamicProgramming {
             index++;
         }
         take += scavHuntHelper(times, points, index + 1, map);
-        return Math.max(take, skip);
+        map.put(index, Math.max(take, skip));
+        return map.get(index);
     }
 
 	/* Uses memoization to calculate the route which grants the most cookies, 
@@ -90,7 +91,7 @@ public class DynamicProgramming {
             down = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);
         }
         map.put(coords, Math.max(right, down));
-        return Math.max(right, down);
+        return map.get(coords);
     }
 
 }
