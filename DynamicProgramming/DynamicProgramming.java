@@ -45,18 +45,46 @@ public class DynamicProgramming {
     // have to choose!
     // Write a method that returns the maximum POINTS you can get.
     public static int scavHunt(int[] times, int[] points) {
-	
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        return scavHuntHelper(times, points, 0, map);
 	}
     
-
+    private static int scavHuntHelper(int[] times, int[] points, int index, HashMap<Integer, Integer> map) {
+        if (index >= times.length) {
+            return 0;
+        }
+        if (map.containsKey(index)) {
+            return map.get(index);
+        }
+        int take = points[index];
+        int skip = scavHuntHelper(times, points, index + 1, map);
+        while (index + 1 < times.length && times[index + 1] - times[index] < 5) {
+            index++;
+        }
+        take += scavHuntHelper(times, points, index + 1, map);
+        return Math.max(take, skip);
+    }
 
 	/* Uses memoization to calculate the route which grants the most cookies, 
 	 * starting at [0][0], only going right or down at each point */
 	public static int dynamicCookies(int[][] cookieGrid) {
-
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        return dynamicCookiesHelper(cookieGrid, "0,0", map);
 	}
     
-    
-
+    private static int dynamicCookiesHelper(int[][] cookieGrid, String coords, HashMap<String, Integer> map) {
+        int row = Integer.parseInt(coords.split(",")[0]);
+        int col = Integer.parseInt(coords.split(",")[1]);
+        if (row >= cookieGrid.length && col >= cookieGrid[0].length) {
+            return 0;
+        }
+        if (map.containsKey(coords)) {
+            return map.get(coords);
+        }
+        int right = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + row + "," + (col + 1), map);
+        int down = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);;
+        map.put(coords, Math.max(right, down));
+        return Math.max(right, down);
+    }
 
 }
