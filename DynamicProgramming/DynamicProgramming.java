@@ -75,14 +75,20 @@ public class DynamicProgramming {
     private static int dynamicCookiesHelper(int[][] cookieGrid, String coords, HashMap<String, Integer> map) {
         int row = Integer.parseInt(coords.split(",")[0]);
         int col = Integer.parseInt(coords.split(",")[1]);
-        if (row >= cookieGrid.length && col >= cookieGrid[0].length) {
+        if (row >= cookieGrid.length - 1 && col >= cookieGrid[0].length - 1) {
             return 0;
         }
         if (map.containsKey(coords)) {
             return map.get(coords);
         }
-        int right = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + row + "," + (col + 1), map);
-        int down = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);;
+        int right = 0;
+        int down = 0;
+        if (col + 1 < cookieGrid[row].length) {
+            right = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + row + "," + (col + 1), map);
+        }
+        if (row + 1 < cookieGrid.length) {
+            down = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);
+        }
         map.put(coords, Math.max(right, down));
         return Math.max(right, down);
     }
