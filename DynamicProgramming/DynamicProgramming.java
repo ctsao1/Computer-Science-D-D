@@ -56,18 +56,27 @@ public class DynamicProgramming {
         if (map.containsKey(index)) {
             return map.get(index);
         }
-        int take = points[index];
         int skip = scavHuntHelper(times, points, index + 1, map);
-        while (index + 1 < times.length && times[index + 1] - times[index] < 5) {
-            index++;
+        int take = points[index];
+        int nextIndex = index + 1;
+        while (nextIndex < times.length && times[nextIndex] - times[index] < 5) {
+            nextIndex++;
         }
-        take += scavHuntHelper(times, points, index + 1, map);
+        take += scavHuntHelper(times, points, nextIndex, map);
         map.put(index, Math.max(take, skip));
         return map.get(index);
     }
 
 	/* Uses memoization to calculate the route which grants the most cookies, 
 	 * starting at [0][0], only going right or down at each point */
+    private static boolean validPoint(int row, int col, int numRows, int numCols, int[][]cookieGrid) {
+		if (row > numRows - 1 || col > numCols - 1 || col < 0 || row < 0
+				|| cookieGrid[row][col] == -1) {
+			return false;
+		}
+		return true;
+	}
+
 	public static int dynamicCookies(int[][] cookieGrid) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         return dynamicCookiesHelper(cookieGrid, "0,0", map);
@@ -76,22 +85,16 @@ public class DynamicProgramming {
     private static int dynamicCookiesHelper(int[][] cookieGrid, String coords, HashMap<String, Integer> map) {
         int row = Integer.parseInt(coords.split(",")[0]);
         int col = Integer.parseInt(coords.split(",")[1]);
-        if (row >= cookieGrid.length - 1 && col >= cookieGrid[0].length - 1) {
-            return 0;
-        }
+        if (!validPoint(row, col, cookieGrid.length, cookieGrid[0].length, cookieGrid)) {
+			return 0;
+		}
         if (map.containsKey(coords)) {
             return map.get(coords);
         }
-        int right = 0;
-        int down = 0;
-        if (col + 1 < cookieGrid[row].length) {
-            right = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + row + "," + (col + 1), map);
-        }
-        if (row + 1 < cookieGrid.length) {
-            down = cookieGrid[row][col] + dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);
-        }
-        map.put(coords, Math.max(right, down));
-        return map.get(coords);
+        int right = dynamicCookiesHelper(cookieGrid, "" + row + "," + (col + 1), map);
+        int down = dynamicCookiesHelper(cookieGrid, "" + (row + 1) + "," + col, map);
+        map.put(coords, cookieGrid[row][col] + Math.max(right, down));
+		return map.get(coords);
     }
 
 }
